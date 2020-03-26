@@ -19,7 +19,7 @@ public class Puzzle {
 
     private String filename;
     private ArrayList<ArrayList<Integer>> board;
-    private Cursor cursor = new Cursor();
+    private Cursor cursor;
     private Event event;
     private GameView gameView;
     private Window window;
@@ -29,6 +29,7 @@ public class Puzzle {
        this.filename = filename;
        this.board = this.read_puzzle();
        this.window = new Window(board.size());
+       this.cursor = new Cursor(board.size());
        this.gameView = new GameView(this.window.getScreen(), board, cursor);
        this.event = new Event(window.getScreen(), this.keyEvent);
     }

@@ -1,3 +1,5 @@
+package solver;
+
 import java.util.ArrayList;
 
 public class AStar extends Solver {
@@ -6,7 +8,7 @@ public class AStar extends Solver {
         super(initboard);
     }
 
-    /*public ExpansionTree.Node<ArrayList<ArrayList<Integer>>> perform() {
+    /*public solver.ExpansionTree.Node<ArrayList<ArrayList<Integer>>> perform() {
 
     }*/
 
