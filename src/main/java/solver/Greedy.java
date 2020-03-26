@@ -1,3 +1,5 @@
+package solver;
+
 import heuristic.CollisionCount;
 import heuristic.Heuristic;
 

@@ -1,3 +1,5 @@
+package solver;
+
 import java.util.ArrayList;
 
 public class UniformCost extends Solver {
@@ -6,7 +8,7 @@ public class UniformCost extends Solver {
         super(initboard);
     }
 
-    /*public ExpansionTree.Node<ArrayList<ArrayList<Integer>>> perform() {
+    /*public solver.ExpansionTree.Node<ArrayList<ArrayList<Integer>>> perform() {
 
     }*/
 

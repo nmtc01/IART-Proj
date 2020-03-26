@@ -1,3 +1,5 @@
+package solver;
+
 import java.util.ArrayList;
 
 public class PlayerMode extends Solver {
@@ -60,10 +62,10 @@ public class PlayerMode extends Solver {
         import java.awt.*;
         import java.util.ArrayList;
 
-public class PlayerMode extends Solver {
+public class solver.PlayerMode extends solver.Solver {
     private UI UI = new UI();
 
-    public PlayerMode(ArrayList<ArrayList<Integer>> initboard, UI UI) {
+    public solver.PlayerMode(ArrayList<ArrayList<Integer>> initboard, UI UI) {
         super(initboard);
         this.UI = UI;
     }
