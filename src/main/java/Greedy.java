@@ -1,3 +1,6 @@
+import heuristic.CollisionCount;
+import heuristic.Heuristic;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Hashtable;

@@ -1,10 +1,12 @@
 public class Cursor {
     private int x;
     private int y;
+    private int size;
 
-    public Cursor() {
+    public Cursor(int size) {
         this.x = 7;
         this.y = 4;
+        this.size = size;
     }
 
     public void processKeyEvent(Puzzle.keyEvent keyEvent) {
@@ -19,19 +21,27 @@ public class Cursor {
     }
 
     public void moveDown(){
-        this.y+=3;
+        int tmp = this.y+3;
+        if (canMove(this.x,tmp))
+            this.y = tmp;
     }
 
     public void moveUp(){
-        this.y-=3;
+        int tmp = this.y-3;
+        if (canMove(this.x, tmp))
+            this.y = tmp;
     }
 
     public void moveRight(){
-        this.x+=4;
+        int tmp = this.x+4;
+        if (canMove(tmp, this.y))
+            this.x = tmp;
     }
 
     public void moveLeft(){
-        this.x-=4;
+        int tmp = this.x-4;
+        if (canMove(tmp, this.y))
+            this.x = tmp;
     }
 
     public int getX() {
@@ -40,5 +50,9 @@ public class Cursor {
 
     public int getY() {
         return y;
+    }
+
+    public boolean canMove(int x, int y) {
+        return (x >= 4 && y >=4 && x < size*4+4 && y < size*3+2);
     }
 }

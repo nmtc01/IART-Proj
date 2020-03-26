@@ -144,7 +144,7 @@ public class GameView {
         textGraphics.putString(new TerminalPosition(cursor.getX()+1, cursor.getY()+1), " ");
         textGraphics.putString(new TerminalPosition(cursor.getX()-1, cursor.getY()+1), " ");
 
-        Integer element = board.get(0).get(0);
+        Integer element = board.get(cursor.getY()/3-1).get(cursor.getX()/4-1);
         if (element == 0)
             textGraphics.putString(new TerminalPosition(cursor.getX(), cursor.getY()), " ");
         else if (element == -2)
