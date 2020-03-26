@@ -8,6 +8,7 @@ public class Cursor {
     }
 
     public void processKeyEvent(Puzzle.keyEvent keyEvent) {
+        System.out.println(keyEvent);
         if (keyEvent == Puzzle.keyEvent.MOVE_DOWN)
             moveDown();
         else if (keyEvent == Puzzle.keyEvent.MOVE_UP)
@@ -16,6 +17,16 @@ public class Cursor {
             moveLeft();
         else if (keyEvent == Puzzle.keyEvent.MOVE_RIGHT)
             moveRight();
+        else if(keyEvent == Puzzle.keyEvent.SELECT){
+            //real coords
+            System.out.println("Real coords: ("+this.getX()+ ","+this.getY()+")");
+            //game coords
+            System.out.println("Real coords: ("+(this.getX()-7)/4+ ","+(this.getY()-4)/3+")"); //[(x,y) - (7,4)]/4
+        }
+        else if(keyEvent == Puzzle.keyEvent.UNDO)
+            System.out.println("Undo (todo)");
+        else if (keyEvent == Puzzle.keyEvent.STOP)
+            System.exit(0);
     }
 
     public void moveDown(){

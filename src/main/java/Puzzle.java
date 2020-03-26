@@ -12,6 +12,8 @@ public class Puzzle {
         MOVE_DOWN,
         MOVE_LEFT,
         MOVE_RIGHT,
+        SELECT,
+        UNDO,
         STOP
     }
 
@@ -62,6 +64,7 @@ public class Puzzle {
         }catch (final FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
+            System.exit(1); //todo change evetually to ask for a new input later if time
         }
 
         return matrix;
