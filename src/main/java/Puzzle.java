@@ -11,7 +11,8 @@ public class Puzzle {
         MOVE_UP,
         MOVE_DOWN,
         MOVE_LEFT,
-        MOVE_RIGHT
+        MOVE_RIGHT,
+        STOP
     }
 
     private String filename;
@@ -27,7 +28,7 @@ public class Puzzle {
        this.board = this.read_puzzle();
        this.window = new Window(board.size());
        this.gameView = new GameView(this.window.getScreen(), board, cursor);
-       this.event = new Event(window.getScreen(), keyEvent);
+       this.event = new Event(window.getScreen(), this.keyEvent);
     }
 
     /* ---- Utils  ---- */
@@ -73,7 +74,7 @@ public class Puzzle {
     public void run() throws IOException {
         while (true) {
             this.gameView.run();
-            event.processKey();
+            this.keyEvent = event.processKey();
             cursor.processKeyEvent(this.keyEvent);
         }
     }
