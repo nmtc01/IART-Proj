@@ -1,3 +1,4 @@
+package heuristic;
 import java.util.ArrayList;
 
 public interface Heuristic {
