@@ -1,7 +1,9 @@
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Application {
+
     public static void main(String[] args) {
         //Get puzzle
         System.out.print("Puzzle name: ");
