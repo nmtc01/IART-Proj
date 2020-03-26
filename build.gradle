@@ -18,3 +18,8 @@ dependencies {
 
 mainClassName = "Application"
 
+run {
+    standardInput = System.in;
+}
+
+
