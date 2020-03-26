@@ -1,3 +1,5 @@
+import com.googlecode.lanterna.screen.Screen;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -5,15 +7,27 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Puzzle {
+    public enum keyEvent{
+        MOVE_UP,
+        MOVE_DOWN,
+        MOVE_LEFT,
+        MOVE_RIGHT
+    }
 
     private String filename;
     private ArrayList<ArrayList<Integer>> board;
+    private Cursor cursor = new Cursor();
+    private Event event;
     private GameView gameView;
+    private Window window;
+    private keyEvent keyEvent;
 
     public Puzzle(String filename)  {
        this.filename = filename;
        this.board = this.read_puzzle();
-       this.gameView = new GameView(new Window(board.size()).getScreen(), board);
+       this.window = new Window(board.size());
+       this.gameView = new GameView(this.window.getScreen(), board, cursor);
+       this.event = new Event(window.getScreen(), keyEvent);
     }
 
     /* ---- Utils  ---- */
@@ -57,6 +71,10 @@ public class Puzzle {
     }
 
     public void run() throws IOException {
-        this.gameView.run();
+        while (true) {
+            this.gameView.run();
+            event.processKey();
+            cursor.processKeyEvent(this.keyEvent);
+        }
     }
 }

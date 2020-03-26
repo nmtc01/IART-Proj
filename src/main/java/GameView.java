@@ -11,13 +11,15 @@ import java.util.ArrayList;
 public class GameView {
     private Screen screen;
     private ArrayList<ArrayList<Integer>> board;
+    private Cursor cursor;
 
-    public GameView(Screen screen, ArrayList<ArrayList<Integer>> matrix) {
+    public GameView(Screen screen, ArrayList<ArrayList<Integer>> matrix, Cursor cursor) {
         this.screen = screen;
         this.board = matrix;
+        this.cursor = cursor;
     }
 
-    private void draw_board(TextGraphics textGraphics, ArrayList<ArrayList<Integer>> board) {
+    private void draw_board(TextGraphics textGraphics) {
         //Rectangle
         textGraphics.setBackgroundColor(TextColor.Factory.fromString("#EEEEEE"));
         textGraphics.fillRectangle(new TerminalPosition(5, 3), new TerminalSize(board.size()*4+1, board.size()*3+1), ' ');
@@ -132,10 +134,32 @@ public class GameView {
         textGraphics.putString(new TerminalPosition(board.size()*4+5, board.size()*3+3), "╝");
     }
 
+    private void draw_cursor(TextGraphics textGraphics) {
+        textGraphics.enableModifiers(SGR.BOLD);
+        textGraphics.setBackgroundColor(TextColor.Factory.fromString("#FACA30"));
+
+        textGraphics.putString(new TerminalPosition(cursor.getX()+1, cursor.getY()), " ");
+        textGraphics.putString(new TerminalPosition(cursor.getX()-1, cursor.getY()), " ");
+        textGraphics.putString(new TerminalPosition(cursor.getX(), cursor.getY()+1), " ");
+        textGraphics.putString(new TerminalPosition(cursor.getX()+1, cursor.getY()+1), " ");
+        textGraphics.putString(new TerminalPosition(cursor.getX()-1, cursor.getY()+1), " ");
+
+        Integer element = board.get(0).get(0);
+        if (element == 0)
+            textGraphics.putString(new TerminalPosition(cursor.getX(), cursor.getY()), " ");
+        else if (element == -2)
+            textGraphics.putString(new TerminalPosition(cursor.getX(), cursor.getY()), "G");
+        else if (element > 0) {
+            textGraphics.putString(new TerminalPosition(cursor.getX(), cursor.getY()), Integer.toString(element));
+        }
+        else textGraphics.putString(new TerminalPosition(cursor.getX(), cursor.getY()), " ");
+    }
+
     private void draw() throws IOException {
         this.screen.clear();
         TextGraphics textGraphics = this.screen.newTextGraphics();
-        draw_board(textGraphics, board);
+        draw_board(textGraphics);
+        draw_cursor(textGraphics);
         this.screen.refresh();
     }
 
