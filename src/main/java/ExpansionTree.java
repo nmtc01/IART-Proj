@@ -18,6 +18,7 @@ public class ExpansionTree<T> {
         private T data;
         private Node<T> parent;
         private ArrayList<Node<T>> children = new ArrayList<>(); //tree map para pesquisa informada, caso geral Integer = 0
+        private int value = 0;
 
         public T getData(){
             return this.data;
@@ -41,6 +42,14 @@ public class ExpansionTree<T> {
 
         public void setParent(Node<T> parent) {
             this.parent = parent;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public void setValue(int value) {
+            this.value = value;
         }
 
     }
