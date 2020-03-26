@@ -21,9 +21,9 @@ public class CollisionCount implements Heuristic {
     private int countPieceCollistions(ArrayList<ArrayList<Integer>> board, Point piece) {
         int numberOfCollisions = 0;
 
-        int line = piece.y;
-        int column = piece.x;
-        int pieceValue = board.get(piece.y).get(piece.x);
+        int line = piece.x;
+        int column = piece.y;
+        int pieceValue = board.get(piece.x).get(piece.y);
 
         for (int i = 1; i <= pieceValue; i++) {
             if (board.get(line + i).get(column) == -1)
