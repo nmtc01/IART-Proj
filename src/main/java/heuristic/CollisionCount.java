@@ -25,11 +25,6 @@ public class CollisionCount implements Heuristic {
         int column = piece.y;
         int pieceValue = board.get(piece.x).get(piece.y);
 
-        /*System.out.println(" Line ");
-        System.out.print(line);
-        System.out.println(" Column ");
-        System.out.print(column);*/
-
         for (int i = 1; i <= pieceValue; i++) {
             int lineDown = line + i;
             int lineUp = line - i;
@@ -38,25 +33,19 @@ public class CollisionCount implements Heuristic {
 
             while(true) {
                 if (lineDown < board.size()) {
-                /*System.out.println(" LineDown ");
-                System.out.print(lineDown);
-                System.out.println(" Board Size ");
-                System.out.print(board.size());*/
                     if (board.get(lineDown).get(column) == -1) {
                         numberOfCollisions++;
                         break;
-                    } else if (board.get(lineDown).get(column) > 0) {
+                    }
+                    else if (board.get(lineDown).get(column) > 0) {
                         lineDown++;
                     }
+                    else break;
                 } else break;
             }
 
             while(true) {
                 if (lineUp >= 0) {
-                /*System.out.println(" LineUp ");
-                System.out.print(lineUp);
-                System.out.println(" Board Size ");
-                System.out.print(board.size());*/
                     if (board.get(lineUp).get(column) == -1) {
                         numberOfCollisions++;
                         break;
@@ -64,15 +53,12 @@ public class CollisionCount implements Heuristic {
                     else if (board.get(lineUp).get(column) > 0) {
                         lineUp--;
                     }
+                    else break;
                 } else break;
             }
 
             while (true) {
                 if (columnRight < board.size()) {
-                /*System.out.println(" ColumnRight ");
-                System.out.print(columnRight);
-                System.out.println(" Board Size ");
-                System.out.print(board.size());*/
                     if (board.get(line).get(columnRight) == -1) {
                         numberOfCollisions++;
                         break;
@@ -80,22 +66,20 @@ public class CollisionCount implements Heuristic {
                     else if (board.get(line).get(columnRight) > 0) {
                         columnRight++;
                     }
+                    else break;
                 }
                 else break;
             }
 
             while(true) {
                 if (columnLeft >= 0) {
-                /*System.out.println(" ColumnRight ");
-                System.out.print(columnLeft);
-                System.out.println(" Board Size ");
-                System.out.print(board.size());*/
                     if (board.get(line).get(columnLeft) == -1) {
                         numberOfCollisions++;
                         break;
                     } else if (board.get(line).get(columnLeft) > 0) {
                         columnLeft++;
                     }
+                    else break;
                 }
                 else break;
             }
