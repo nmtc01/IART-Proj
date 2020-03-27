@@ -79,16 +79,16 @@ class Puzzle {
         int tileVal = this.getTileValue(x,y);
         int size = this.board.get(0).size();
 
-        int i = 0; //iterator
+        int i = tileVal;
         int carry = 0;
 
         //top moves
         carry = y;
-        while (i < tileVal){
-            if( carry <= 0 || carry >= size)
+        while (i != 0){
+            if( carry <= 0 || carry+1 >= size)
                 break;
-            if(this.board.get(carry).get(x) != -1)
-                i++;
+            if(this.board.get(carry-1).get(x) == 0)
+                i--;
             carry--;
 
         }
@@ -98,9 +98,9 @@ class Puzzle {
         //bottom moves
         carry = y;
         while (i < tileVal){
-            if( carry <= 0 || carry >= size)
+            if( carry <= 0 || carry+1 >= size)
                 break;
-            if(this.board.get(carry).get(x) != -1)
+            if(this.board.get(carry+1).get(x) == 0)
                 i++;
             carry++;
         }
@@ -110,9 +110,9 @@ class Puzzle {
         //left moves
         carry = x;
         while (i < tileVal){
-            if( carry <= 0 || carry >= size)
+            if( carry <= 0 || carry+1 >= size)
                 break;
-            if(this.board.get(carry).get(x) != -1)
+            if(this.board.get(y).get(carry-1) == 0)
                 i++;
             carry--;
         }
@@ -122,9 +122,9 @@ class Puzzle {
         //right moves
         carry = x;
         while (i < tileVal){
-            if( carry <= 0 || carry >= size)
+            if( carry <= 0 || carry+1 >= size)
                 break;
-            if(this.board.get(carry).get(x) != -1)
+            if(this.board.get(y).get(carry+1) == 0)
                 i++;
             carry++;
         }
