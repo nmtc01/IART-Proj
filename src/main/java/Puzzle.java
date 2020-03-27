@@ -34,6 +34,7 @@ class Puzzle {
        this.cursor = new Cursor(this);
        this.gameView = new GameView(this.window.getScreen(), board, cursor);
        this.event = new Event(window.getScreen(), this.keyEvent);
+       this.previousBoards = new ArrayList<ArrayList<ArrayList<Integer>>>();
     }
 
     /* ---- Utils  ---- */
@@ -132,7 +133,80 @@ class Puzzle {
 
         return possibleMoves;
     }
+    public void moveTileUp(int x, int y ){
+            ArrayList<ArrayList<Integer>> prev = (ArrayList<ArrayList<Integer>>) this.board.clone();
+            this.previousBoards.add(prev);
 
+            int val = this.getTileValue(x,y);
+            this.board.get(y).set(x,-1);
+            int i = y;
+            while(val > 0){
+                i--;
+                if(this.board.get(i).get(x) == 0 || this.board.get(i).get(x) == -2){
+                    this.board.get(i).set(x,-1);
+                    val--;
+                }
+                if(i == 0){
+                    break;
+                }
+            }
+    }
+    public void moveTileDown(int x, int y ){
+            ArrayList<ArrayList<Integer>> prev = (ArrayList<ArrayList<Integer>>) this.board.clone();
+            previousBoards.add(prev);
+
+        int val = this.getTileValue(x,y);
+            this.board.get(y).set(x,-1);
+            int i = y;
+            while(val > 0){
+                i++;
+                if(i == this.board.get(0).size()){
+                    break;
+                }
+                if(this.board.get(i).get(x) == 0 || this.board.get(i).get(x) == -2) {
+                    this.board.get(i).set(x, -1);
+                    val--;
+                }
+            }
+
+    }
+    public void moveTileLeft(int x, int y ){
+        ArrayList<ArrayList<Integer>> prev = (ArrayList<ArrayList<Integer>>) this.board.clone();
+        previousBoards.add(prev);
+
+        int val = this.getTileValue(x,y);
+        this.board.get(y).set(x,-1);
+            int i = x;
+            while(val > 0){
+                i--;
+                if(this.board.get(y).get(i) == 0 || this.board.get(y).get(i) == -2){
+                    this.board.get(y).set(i,-1);
+                    val--;
+                }
+                if(i == 0){
+                    break;
+                }
+        }
+    }
+    public void moveTileRight(int x, int y ){
+        ArrayList<ArrayList<Integer>> prev = (ArrayList<ArrayList<Integer>>) this.board.clone();
+        previousBoards.add(prev);
+
+        int val = this.getTileValue(x,y);
+            this.board.get(y).set(x,-1);
+            int i = x;
+            while(val > 0){
+                i++;
+                if(i == this.board.get(0).size()){
+                    break;
+                }
+                if(this.board.get(y).get(i) == 0 || this.board.get(y).get(i) == -2){
+                    this.board.get(y).set(i,-1);
+                    val--;
+                }
+            }
+
+    }
 
     public ArrayList<ArrayList<Integer>> getBoard(){
         return this.board;

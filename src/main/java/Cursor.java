@@ -39,25 +39,37 @@ public class Cursor {
 
     public void moveDown(){
         int tmp = this.y+3;
-        if (canMove(this.x,tmp))
+        if(this.cursorSelect) {
+            this.puzzle.moveTileDown(this.getGameX(), this.getGameY());
+            this.cursorSelect = false;
+        }else  if (canMove(this.x,tmp))
             this.y = tmp;
     }
 
     public void moveUp(){
         int tmp = this.y-3;
-        if (canMove(this.x, tmp))
+        if(this.cursorSelect) {
+            this.puzzle.moveTileUp(this.getGameX(), this.getGameY());
+            this.cursorSelect = false;
+        }else if (canMove(this.x, tmp))
             this.y = tmp;
     }
 
     public void moveRight(){
         int tmp = this.x+4;
-        if (canMove(tmp, this.y))
+        if(this.cursorSelect){
+            this.puzzle.moveTileRight(this.getGameX(),this.getGameY()  );
+            this.cursorSelect = false;
+        }else if(canMove(tmp, this.y))
             this.x = tmp;
     }
 
     public void moveLeft(){
         int tmp = this.x-4;
-        if (canMove(tmp, this.y))
+        if(this.cursorSelect){
+            this.puzzle.moveTileLeft(this.getGameX(),this.getGameY() );
+            this.cursorSelect = false;
+        }else if (canMove(tmp, this.y))
             this.x = tmp;
     }
 
@@ -104,7 +116,10 @@ public class Cursor {
     }
 
     public int[][] getPossibleMoves(){
-        return this.puzzle.getPossibleMoves(this.getGameX(),this.getGameY());
+        int[][] error = {{-1}};
+        if(this.puzzle.getTileValue(this.getGameX(),this.getGameY()) > 0)
+            return this.puzzle.getPossibleMoves(this.getGameX(),this.getGameY());
+        else return error;
     }
 
     public boolean getCursorSelectState() {

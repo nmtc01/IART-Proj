@@ -162,9 +162,11 @@ public class GameView {
         textGraphics.setBackgroundColor(TextColor.Factory.fromString("#0000FF"));
         textGraphics.setBackgroundColor(TextColor.Factory.fromString("#FACA30"));
 
-        if(this.cursor.getCursorSelectState()){
+        int[][] possibleMoves = this.cursor.getPossibleMoves();
+
+        if(possibleMoves[0][0] != -1){
             //todo avoid dots on -1 tiles
-            int[][] possibleMoves = this.cursor.getPossibleMoves();
+
             int game_x = this.cursor.getGameX();
             int game_y;
             int real_x = this.cursor.getX();
