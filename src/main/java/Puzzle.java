@@ -6,13 +6,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Puzzle {
+class Puzzle {
     public enum keyEvent{
         MOVE_UP,
         MOVE_DOWN,
         MOVE_LEFT,
         MOVE_RIGHT,
         SELECT,
+        UNSELECT,
         UNDO,
         STOP
     }
@@ -73,6 +74,10 @@ public class Puzzle {
 
     public ArrayList<ArrayList<Integer>> getBoard(){
         return this.board;
+    }
+
+    public int getTileValue(int x, int y){
+        return this.board.get(y).get(x);
     }
 
     public void run() throws IOException {

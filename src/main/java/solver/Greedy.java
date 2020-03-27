@@ -80,5 +80,3 @@ public class Greedy extends Solver {
     }
 
 }
-
-

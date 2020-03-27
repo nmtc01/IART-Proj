@@ -25,14 +25,16 @@ public class Event {
             this.event = Puzzle.keyEvent.MOVE_LEFT;
         else if (key.getKeyType() == KeyType.ArrowRight)
             this.event = Puzzle.keyEvent.MOVE_RIGHT;
-        else if (key.getKeyType() == KeyType.Enter)
-            this.event = Puzzle.keyEvent.SELECT;
+        else if (key.getKeyType() == KeyType.Enter){
+            if(this.event != Puzzle.keyEvent.SELECT)
+                this.event = Puzzle.keyEvent.SELECT;
+           // else this.event = Puzzle.keyEvent.UNSELECT;
+        }
         //else if(key.getKeyType() == KeyType.valueOf("c") )
            // this.event = Puzzle.keyEvent.UNDO;
         else if(key.getKeyType() == KeyType.Escape)
             this.event = Puzzle.keyEvent.STOP;
 
-        //todo ignore events that are not needed
         return this.event;
     }
 }

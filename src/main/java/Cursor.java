@@ -1,12 +1,18 @@
+import sun.jvmstat.perfdata.monitor.MonitorVersionException;
+
 public class Cursor {
+
+
     private int x;
     private int y;
     private int size;
+    private  boolean cursorSelect;
 
     public Cursor(int size) {
         this.x = 7;
         this.y = 4;
         this.size = size;
+        this.cursorSelect = false;
     }
 
     public void processKeyEvent(Puzzle.keyEvent keyEvent) {
@@ -19,12 +25,8 @@ public class Cursor {
             moveLeft();
         else if (keyEvent == Puzzle.keyEvent.MOVE_RIGHT)
             moveRight();
-        else if(keyEvent == Puzzle.keyEvent.SELECT){
-            //real coords
-            System.out.println("Real coords: ("+this.getX()+ ","+this.getY()+")");
-            //game coords
-            System.out.println("Real coords: ("+(this.getX()-7)/4+ ","+(this.getY()-4)/3+")"); //[(x,y) - (7,4)]/4
-        }
+        else if(keyEvent == Puzzle.keyEvent.SELECT)
+            showMoves();
         else if(keyEvent == Puzzle.keyEvent.UNDO)
             System.out.println("Undo (todo)");
         else if (keyEvent == Puzzle.keyEvent.STOP)
@@ -55,6 +57,26 @@ public class Cursor {
             this.x = tmp;
     }
 
+    public void showMoves(){
+        //set state to true
+        if(this.cursorSelect)
+            this.cursorSelect = false;
+        else this.cursorSelect = true;
+        //real coords
+        System.out.println("Real coords: ("+this.getX()+ ","+this.getY()+")");
+        //game coords
+        int x =  (this.getX()-7)/4;
+        int y = (this.getY()-4)/3;
+        System.out.println("Real coords: ("+(this.getX()-7)/4+ ","+(this.getY()-4)/3+")"); //[(x,y) - (7,4)]/4
+        //get board info
+        //System.out.println("Value: " + Puzzle.getTileValue(x,y));
+    }
+
+    public int[] getGameCoords(){
+        return new int[] {(this.getX() - 7) / 4, (this.getY() - 4) / 3};
+
+    }
+
     public int getX() {
         return x;
     }
@@ -65,5 +87,9 @@ public class Cursor {
 
     public boolean canMove(int x, int y) {
         return (x >= 4 && y >=4 && x < size*4+4 && y < size*3+2);
+    }
+
+    public boolean getCursorSelectState() {
+        return this.cursorSelect;
     }
 }
