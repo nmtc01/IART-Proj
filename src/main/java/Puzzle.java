@@ -76,6 +76,7 @@ public class Puzzle {
         Greedy algorithm = new Greedy(this.getBoard());
 
         draw(this.getBoard());
+
         System.out.println("");
 
         ExpansionTree.Node<ArrayList<ArrayList<Integer>>> s = algorithm.perform();

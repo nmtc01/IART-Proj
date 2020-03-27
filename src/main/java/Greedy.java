@@ -20,6 +20,8 @@ public class Greedy extends Solver {
     }
 
     public ExpansionTree.Node<ArrayList<ArrayList<Integer>>> perform() {
+        System.out.println("Number of visited Nodes:");
+
         ExpansionTree.Node<ArrayList<ArrayList<Integer>>> s = getCurrentState();
 
         PriorityQueue<ExpansionTree.Node<ArrayList<ArrayList<Integer>>>> priorityQueue = new PriorityQueue<>(4, new NodeComparator());
@@ -39,6 +41,7 @@ public class Greedy extends Solver {
             for(int i = 0; i < v.getChildren().size(); i++) {
                 ExpansionTree.Node<ArrayList<ArrayList<Integer>>> w = v.getChildren().get(i);
                 if (isEnd(w)) {
+                    System.out.println("\nTotal number of visited Nodes: " + visitedNodes.size());
                     return w;
                 }
 
@@ -53,6 +56,12 @@ public class Greedy extends Solver {
                     //this.expand_state();
                     visitedNodes.put(id, w);
                     id++;
+                }
+                if (visitedNodes.size() % 1000 == 0) {
+                    System.out.print('.');
+                }
+                if (visitedNodes.size() % 50000 == 0) {
+                    System.out.println(" (" + visitedNodes.size() / 1000 + "k visited Nodes)");
                 }
             }
         }
