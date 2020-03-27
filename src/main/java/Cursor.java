@@ -1,5 +1,7 @@
 import sun.jvmstat.perfdata.monitor.MonitorVersionException;
 
+import java.util.Arrays;
+
 public class Cursor {
 
 
@@ -7,12 +9,14 @@ public class Cursor {
     private int y;
     private int size;
     private  boolean cursorSelect;
+    private Puzzle puzzle;
 
-    public Cursor(int size) {
+    public Cursor(Puzzle puzzle) {
         this.x = 7;
         this.y = 4;
-        this.size = size;
+        this.size = puzzle.getBoard().size();
         this.cursorSelect = false;
+        this.puzzle =puzzle;
     }
 
     public void processKeyEvent(Puzzle.keyEvent keyEvent) {
@@ -65,11 +69,12 @@ public class Cursor {
         //real coords
         System.out.println("Real coords: ("+this.getX()+ ","+this.getY()+")");
         //game coords
-        int x =  (this.getX()-7)/4;
-        int y = (this.getY()-4)/3;
-        System.out.println("Real coords: ("+(this.getX()-7)/4+ ","+(this.getY()-4)/3+")"); //[(x,y) - (7,4)]/4
+        int x =  this.getGameX();
+        int y = this.getGameY();
+        System.out.println("Game coords: ("+x+ ","+y+")"); //[(x,y) - (7,4)]/4
         //get board info
         //System.out.println("Value: " + Puzzle.getTileValue(x,y));
+        System.out.println(Arrays.deepToString(this.puzzle.getPossibleMoves(x, y)));
     }
 
     public int[] getGameCoords(){
@@ -85,8 +90,21 @@ public class Cursor {
         return y;
     }
 
+    public int getGameX(){
+        return ((this.getX()-7)/4);
+    }
+
+    public int getGameY(){
+        return ((this.getY()-4)/3);
+    }
+
+
     public boolean canMove(int x, int y) {
         return (x >= 4 && y >=4 && x < size*4+4 && y < size*3+2);
+    }
+
+    public int[][] getPossibleMoves(){
+        return this.puzzle.getPossibleMoves(this.getGameX(),this.getGameY());
     }
 
     public boolean getCursorSelectState() {

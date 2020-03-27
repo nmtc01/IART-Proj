@@ -19,6 +19,7 @@ class Puzzle {
     }
 
     private String filename;
+    private ArrayList<ArrayList<ArrayList<Integer>>> previousBoards; //todo
     private ArrayList<ArrayList<Integer>> board;
     private Cursor cursor;
     private Event event;
@@ -30,7 +31,7 @@ class Puzzle {
        this.filename = filename;
        this.board = this.read_puzzle();
        this.window = new Window(board.size());
-       this.cursor = new Cursor(board.size());
+       this.cursor = new Cursor(this);
        this.gameView = new GameView(this.window.getScreen(), board, cursor);
        this.event = new Event(window.getScreen(), this.keyEvent);
     }
@@ -71,6 +72,67 @@ class Puzzle {
 
         return matrix;
     }
+
+    //game calculation;
+    public int[][] getPossibleMoves(int x, int y){ //always returns 4 moves no matter what
+        int[][] possibleMoves = new int[4][1];
+        int tileVal = this.getTileValue(x,y);
+        int size = this.board.get(0).size();
+
+        int i = 0; //iterator
+        int carry = 0;
+
+        //top moves
+        carry = y;
+        while (i < tileVal){
+            if( carry <= 0 || carry >= size)
+                break;
+            if(this.board.get(carry).get(x) != -1)
+                i++;
+            carry--;
+
+        }
+        possibleMoves[0] = new int[]{x, carry};
+        i = 0;
+
+        //bottom moves
+        carry = y;
+        while (i < tileVal){
+            if( carry <= 0 || carry >= size)
+                break;
+            if(this.board.get(carry).get(x) != -1)
+                i++;
+            carry++;
+        }
+        i = 0;
+        possibleMoves[1] = new int[]{x, carry};
+
+        //left moves
+        carry = x;
+        while (i < tileVal){
+            if( carry <= 0 || carry >= size)
+                break;
+            if(this.board.get(carry).get(x) != -1)
+                i++;
+            carry--;
+        }
+        i = 0;
+        possibleMoves[2] = new int[]{carry, y};
+
+        //right moves
+        carry = x;
+        while (i < tileVal){
+            if( carry <= 0 || carry >= size)
+                break;
+            if(this.board.get(carry).get(x) != -1)
+                i++;
+            carry++;
+        }
+        possibleMoves[3] = new int[]{carry, y};
+
+        return possibleMoves;
+    }
+
 
     public ArrayList<ArrayList<Integer>> getBoard(){
         return this.board;

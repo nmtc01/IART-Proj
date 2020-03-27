@@ -163,8 +163,56 @@ public class GameView {
         textGraphics.setBackgroundColor(TextColor.Factory.fromString("#FACA30"));
 
         if(this.cursor.getCursorSelectState()){
-            System.out.println("doing stuff");
+            //todo avoid dots on -1 tiles
+            int[][] possibleMoves = this.cursor.getPossibleMoves();
+            int game_x = this.cursor.getGameX();
+            int game_y;
+            int real_x = this.cursor.getX();
+            int real_y = this.cursor.getY();
+            int aux;
+            int i = 1;
 
+            //top
+            aux = possibleMoves[0][1];
+            game_y = this.cursor.getGameY();
+            while(game_y >  aux ){
+                textGraphics.putString(new TerminalPosition(real_x, real_y-i*3), ".");
+                i++;
+                game_y--;
+            }
+
+            //bottom
+            i = 1;
+            aux = possibleMoves[1][1];
+            game_y = this.cursor.getGameY();
+            while(game_y < aux ){
+                textGraphics.putString(new TerminalPosition(real_x, real_y+i*3), ".");
+                i++;
+                game_y++;
+            }
+
+            //left
+            i =1;
+            aux = possibleMoves[2][0];
+            while(game_x != aux ){
+                textGraphics.putString(new TerminalPosition(real_x-i*4, real_y), ".");
+                i++;
+                game_x--;
+            }
+
+
+            //right
+            i=1;
+            aux = possibleMoves[3][0];
+            game_x = this.cursor.getGameX();
+            while(game_x < aux ){
+                textGraphics.putString(new TerminalPosition(real_x+i*4, real_y), ".");
+                i++;
+                game_x++;
+            }
+
+
+            /*
             int game_x =  this.cursor.getGameCoords()[0];
             int game_y =  this.cursor.getGameCoords()[1];
             int real_x = this.cursor.getX();
@@ -179,7 +227,7 @@ public class GameView {
                 textGraphics.putString(new TerminalPosition(real_x, real_y+i*3), ".");
                 textGraphics.putString(new TerminalPosition(real_x-i*4, real_y), ".");
                 textGraphics.putString(new TerminalPosition(real_x, real_y-i*3), ".");
-            }
+            }*/
         }
     }
 

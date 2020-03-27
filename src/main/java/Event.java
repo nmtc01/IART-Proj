@@ -26,8 +26,9 @@ public class Event {
         else if (key.getKeyType() == KeyType.ArrowRight)
             this.event = Puzzle.keyEvent.MOVE_RIGHT;
         else if (key.getKeyType() == KeyType.Enter){
-            if(this.event != Puzzle.keyEvent.SELECT)
+            if(this.event != Puzzle.keyEvent.SELECT){
                 this.event = Puzzle.keyEvent.SELECT;
+            }
            // else this.event = Puzzle.keyEvent.UNSELECT;
         }
         //else if(key.getKeyType() == KeyType.valueOf("c") )
