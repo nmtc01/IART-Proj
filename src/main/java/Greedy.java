@@ -14,7 +14,7 @@ public class Greedy extends Solver {
     public Greedy(ArrayList<ArrayList<Integer>> initboard){
         super(initboard);
 
-        heuristic = new CollisionCount();
+        heuristic = new CollisionCountW_WinningPieceCheck();
         visitedNodes = new Hashtable<>();
         id = 0;
     }
