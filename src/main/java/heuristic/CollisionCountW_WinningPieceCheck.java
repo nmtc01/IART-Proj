@@ -17,6 +17,7 @@ public class CollisionCountW_WinningPieceCheck implements Heuristic {
                 }
             }
         }
+        else totalCollisions = -1;
         return totalCollisions;
     }
 

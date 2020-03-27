@@ -73,19 +73,22 @@ public class Puzzle {
 
     public void run() throws IOException {
         /** Algorithm Testing*/
-        /*Greedy algorithm = new Greedy(this.getBoard());
+        Greedy algorithm = new Greedy(this.getBoard());
+
+        draw(this.getBoard());
+        System.out.println("");
 
         ExpansionTree.Node<ArrayList<ArrayList<Integer>>> s = algorithm.perform();
 
         ArrayList<ArrayList<Integer>> finalBoard = s.getData();
 
-        draw(finalBoard);*/
+        draw(finalBoard);
 
-        while (true) {
+        /*while (true) {
             this.gameView.run();
             event.processKey();
             cursor.processKeyEvent(this.keyEvent);
-        }
+        }*/
     }
 
     public void draw(ArrayList<ArrayList<Integer>> matrix){

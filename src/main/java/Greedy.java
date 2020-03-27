@@ -31,29 +31,32 @@ public class Greedy extends Solver {
             id++;
         }
 
-        this.expand_state();
-
         while(!priorityQueue.isEmpty()) {
             ExpansionTree.Node<ArrayList<ArrayList<Integer>>> v = priorityQueue.remove();
+            this.setCurrentState(v);
+            this.expand_state();
 
             for(int i = 0; i < v.getChildren().size(); i++) {
                 ExpansionTree.Node<ArrayList<ArrayList<Integer>>> w = v.getChildren().get(i);
-                if (isEnd(w))
+                if (isEnd(w)) {
                     return w;
+                }
 
                 int value = eval(w);
                 w.setValue(value);
 
                 if (!visitedNodes.contains(w)) {
-                    priorityQueue.add(w);
-                    this.setCurrentState(w);
-                    this.expand_state();
+                    if (value >= 0) {
+                        priorityQueue.add(w);
+                    }
+                    //this.setCurrentState(w);
+                    //this.expand_state();
                     visitedNodes.put(id, w);
                     id++;
                 }
             }
         }
-
+        System.out.println("Returning Root");
         return this.getStates().getRoot();
     }
 
