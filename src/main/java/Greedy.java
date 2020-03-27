@@ -75,6 +75,12 @@ public class Greedy extends Solver {
                 return 1;
             else if (o1.getValue() > o2.getValue())
                 return -1;
+            else {
+                if (o1.getDepth() < o2.getDepth())
+                    return 1;
+                else if (o1.getDepth() > o2.getDepth())
+                    return -1;
+            }
             return 0;
         }
     }

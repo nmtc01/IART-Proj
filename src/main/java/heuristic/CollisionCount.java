@@ -36,44 +36,68 @@ public class CollisionCount implements Heuristic {
             int columnRight = column + i;
             int columnLeft = column - i;
 
-            if (lineDown < board.size()) {
+            while(true) {
+                if (lineDown < board.size()) {
                 /*System.out.println(" LineDown ");
                 System.out.print(lineDown);
                 System.out.println(" Board Size ");
                 System.out.print(board.size());*/
-                if (board.get(lineDown).get(column) == -1) {
-                    numberOfCollisions++;
-                }
+                    if (board.get(lineDown).get(column) == -1) {
+                        numberOfCollisions++;
+                        break;
+                    } else if (board.get(lineDown).get(column) > 0) {
+                        lineDown++;
+                    }
+                } else break;
             }
 
-            if (lineUp >= 0) {
+            while(true) {
+                if (lineUp >= 0) {
                 /*System.out.println(" LineUp ");
                 System.out.print(lineUp);
                 System.out.println(" Board Size ");
                 System.out.print(board.size());*/
-                if (board.get(lineUp).get(column) == -1) {
-                    numberOfCollisions++;
-                }
+                    if (board.get(lineUp).get(column) == -1) {
+                        numberOfCollisions++;
+                        break;
+                    }
+                    else if (board.get(lineUp).get(column) > 0) {
+                        lineUp--;
+                    }
+                } else break;
             }
 
-            if (columnRight < board.size()) {
+            while (true) {
+                if (columnRight < board.size()) {
                 /*System.out.println(" ColumnRight ");
                 System.out.print(columnRight);
                 System.out.println(" Board Size ");
                 System.out.print(board.size());*/
-                if (board.get(line).get(columnRight) == -1){
-                    numberOfCollisions++;
+                    if (board.get(line).get(columnRight) == -1) {
+                        numberOfCollisions++;
+                        break;
+                    }
+                    else if (board.get(line).get(columnRight) > 0) {
+                        columnRight++;
+                    }
                 }
+                else break;
             }
 
-            if (columnLeft >= 0) {
+            while(true) {
+                if (columnLeft >= 0) {
                 /*System.out.println(" ColumnRight ");
                 System.out.print(columnLeft);
                 System.out.println(" Board Size ");
                 System.out.print(board.size());*/
-                if (board.get(line).get(columnLeft) == -1) {
-                    numberOfCollisions++;
+                    if (board.get(line).get(columnLeft) == -1) {
+                        numberOfCollisions++;
+                        break;
+                    } else if (board.get(line).get(columnLeft) > 0) {
+                        columnLeft++;
+                    }
                 }
+                else break;
             }
         }
 
