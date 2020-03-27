@@ -8,15 +8,13 @@ import java.util.PriorityQueue;
 public class Greedy extends Solver {
     private Heuristic heuristic;
 
-    private Hashtable<Integer, ExpansionTree.Node> visitedNodes;
-    private int id;
+    private int visitedNodes;
 
     public Greedy(ArrayList<ArrayList<Integer>> initboard){
         super(initboard);
 
         heuristic = new CollisionCountW_WinningPieceCheck();
-        visitedNodes = new Hashtable<>();
-        id = 0;
+        visitedNodes = 0;
     }
 
     public ExpansionTree.Node<ArrayList<ArrayList<Integer>>> perform() {
@@ -27,11 +25,7 @@ public class Greedy extends Solver {
         PriorityQueue<ExpansionTree.Node<ArrayList<ArrayList<Integer>>>> priorityQueue = new PriorityQueue<>(4, new NodeComparator());
 
         priorityQueue.add(s);
-
-        if (!visitedNodes.contains(s)) {
-            visitedNodes.put(id, s);
-            id++;
-        }
+        visitedNodes++;
 
         while(!priorityQueue.isEmpty()) {
             ExpansionTree.Node<ArrayList<ArrayList<Integer>>> v = priorityQueue.remove();
@@ -41,27 +35,24 @@ public class Greedy extends Solver {
             for(int i = 0; i < v.getChildren().size(); i++) {
                 ExpansionTree.Node<ArrayList<ArrayList<Integer>>> w = v.getChildren().get(i);
                 if (isEnd(w)) {
-                    System.out.println("\nTotal number of visited Nodes: " + visitedNodes.size());
+                    System.out.println("\nTotal number of visited Nodes: " + visitedNodes);
                     return w;
                 }
 
                 int value = eval(w);
                 w.setValue(value);
 
-                if (!visitedNodes.contains(w)) {
-                    if (value >= 0) {
-                        priorityQueue.add(w);
-                    }
-                    //this.setCurrentState(w);
-                    //this.expand_state();
-                    visitedNodes.put(id, w);
-                    id++;
+                visitedNodes++;
+
+                if (value >= 0) {
+                    priorityQueue.add(w);
                 }
-                if (visitedNodes.size() % 1000 == 0) {
+
+                if (visitedNodes % 1000 == 0) {
                     System.out.print('.');
                 }
-                if (visitedNodes.size() % 50000 == 0) {
-                    System.out.println(" (" + visitedNodes.size() / 1000 + "k visited Nodes)");
+                if (visitedNodes % 50000 == 0) {
+                    System.out.println(" (" + visitedNodes / 1000 + "k visited Nodes)");
                 }
             }
         }
