@@ -19,6 +19,10 @@ public class GameView {
         this.cursor = cursor;
     }
 
+    public void setBoard(ArrayList<ArrayList<Integer>> board) {
+        this.board = board;
+    }
+
     private void draw_board(TextGraphics textGraphics) {
         //Rectangle
         textGraphics.setBackgroundColor(TextColor.Factory.fromString("#EEEEEE"));
