@@ -1,3 +1,5 @@
+package solver;
+
 import heuristic.*;
 
 import java.util.ArrayList;
@@ -77,5 +79,3 @@ public class Greedy extends Solver {
     }
 
 }
-
-

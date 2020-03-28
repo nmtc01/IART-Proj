@@ -1,13 +1,26 @@
+import sun.jvmstat.perfdata.monitor.MonitorVersionException;
+
+import java.util.Arrays;
+
 public class Cursor {
+
+
     private int x;
     private int y;
+    private int size;
+    private  boolean cursorSelect;
+    private Puzzle puzzle;
 
-    public Cursor() {
+    public Cursor(Puzzle puzzle) {
         this.x = 7;
         this.y = 4;
+        this.size = puzzle.getBoard().size();
+        this.cursorSelect = false;
+        this.puzzle =puzzle;
     }
 
     public void processKeyEvent(Puzzle.keyEvent keyEvent) {
+        System.out.println(keyEvent);
         if (keyEvent == Puzzle.keyEvent.MOVE_DOWN)
             moveDown();
         else if (keyEvent == Puzzle.keyEvent.MOVE_UP)
@@ -16,22 +29,69 @@ public class Cursor {
             moveLeft();
         else if (keyEvent == Puzzle.keyEvent.MOVE_RIGHT)
             moveRight();
+        else if(keyEvent == Puzzle.keyEvent.SELECT)
+            showMoves();
+        else if(keyEvent == Puzzle.keyEvent.UNDO)
+            System.out.println("Undo (todo)");
+        else if (keyEvent == Puzzle.keyEvent.STOP)
+            System.exit(0);
     }
 
     public void moveDown(){
-        this.y++;
+        int tmp = this.y+3;
+        if(this.cursorSelect) {
+            this.puzzle.moveTileDown(this.getGameX(), this.getGameY());
+            this.cursorSelect = false;
+        }else  if (canMove(this.x,tmp))
+            this.y = tmp;
     }
 
     public void moveUp(){
-        this.y--;
+        int tmp = this.y-3;
+        if(this.cursorSelect) {
+            this.puzzle.moveTileUp(this.getGameX(), this.getGameY());
+            this.cursorSelect = false;
+        }else if (canMove(this.x, tmp))
+            this.y = tmp;
     }
 
     public void moveRight(){
-        this.x++;
+        int tmp = this.x+4;
+        if(this.cursorSelect){
+            this.puzzle.moveTileRight(this.getGameX(),this.getGameY()  );
+            this.cursorSelect = false;
+        }else if(canMove(tmp, this.y))
+            this.x = tmp;
     }
 
     public void moveLeft(){
-        this.x--;
+        int tmp = this.x-4;
+        if(this.cursorSelect){
+            this.puzzle.moveTileLeft(this.getGameX(),this.getGameY() );
+            this.cursorSelect = false;
+        }else if (canMove(tmp, this.y))
+            this.x = tmp;
+    }
+
+    public void showMoves(){
+        //set state to true
+        if(this.cursorSelect)
+            this.cursorSelect = false;
+        else this.cursorSelect = true;
+        //real coords
+        System.out.println("Real coords: ("+this.getX()+ ","+this.getY()+")");
+        //game coords
+        int x =  this.getGameX();
+        int y = this.getGameY();
+        System.out.println("Game coords: ("+x+ ","+y+")"); //[(x,y) - (7,4)]/4
+        //get board info
+        //System.out.println("Value: " + Puzzle.getTileValue(x,y));
+        System.out.println(Arrays.deepToString(this.puzzle.getPossibleMoves(x, y)));
+    }
+
+    public int[] getGameCoords(){
+        return new int[] {(this.getX() - 7) / 4, (this.getY() - 4) / 3};
+
     }
 
     public int getX() {
@@ -40,5 +100,29 @@ public class Cursor {
 
     public int getY() {
         return y;
+    }
+
+    public int getGameX(){
+        return ((this.getX()-7)/4);
+    }
+
+    public int getGameY(){
+        return ((this.getY()-4)/3);
+    }
+
+
+    public boolean canMove(int x, int y) {
+        return (x >= 4 && y >=4 && x < size*4+4 && y < size*3+2);
+    }
+
+    public int[][] getPossibleMoves(){
+        int[][] error = {{-1}};
+        if(this.puzzle.getTileValue(this.getGameX(),this.getGameY()) > 0)
+            return this.puzzle.getPossibleMoves(this.getGameX(),this.getGameY());
+        else return error;
+    }
+
+    public boolean getCursorSelectState() {
+        return this.cursorSelect;
     }
 }

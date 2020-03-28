@@ -6,17 +6,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Puzzle {
+class Puzzle {
     public enum keyEvent{
         MOVE_UP,
         MOVE_DOWN,
         MOVE_LEFT,
-        MOVE_RIGHT
+        MOVE_RIGHT,
+        SELECT,
+        UNSELECT,
+        UNDO,
+        STOP
     }
 
     private String filename;
+    private ArrayList<ArrayList<ArrayList<Integer>>> previousBoards; //todo
     private ArrayList<ArrayList<Integer>> board;
-    private Cursor cursor = new Cursor();
+    private Cursor cursor;
     private Event event;
     private GameView gameView;
     private Window window;
@@ -26,8 +31,10 @@ public class Puzzle {
        this.filename = filename;
        this.board = this.read_puzzle();
        this.window = new Window(board.size());
+       this.cursor = new Cursor(this);
        this.gameView = new GameView(this.window.getScreen(), board, cursor);
-       this.event = new Event(window.getScreen(), keyEvent);
+       this.event = new Event(window.getScreen(), this.keyEvent);
+       this.previousBoards = new ArrayList<ArrayList<ArrayList<Integer>>>();
     }
 
     /* ---- Utils  ---- */
@@ -61,19 +68,158 @@ public class Puzzle {
         }catch (final FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
+            System.exit(1); //todo change evetually to ask for a new input later if time
         }
 
         return matrix;
+    }
+
+    //game calculation;
+    public int[][] getPossibleMoves(int x, int y){ //always returns 4 moves no matter what
+        int[][] possibleMoves = new int[4][1];
+        int tileVal = this.getTileValue(x,y);
+        int size = this.board.get(0).size();
+
+        int i = tileVal;
+        int carry = 0;
+
+        //top moves
+        carry = y;
+        while (i != 0){
+            if( carry <= 0 || carry+1 >= size)
+                break;
+            if(this.board.get(carry-1).get(x) == 0)
+                i--;
+            carry--;
+
+        }
+        possibleMoves[0] = new int[]{x, carry};
+        i = 0;
+
+        //bottom moves
+        carry = y;
+        while (i < tileVal){
+            if( carry <= 0 || carry+1 >= size)
+                break;
+            if(this.board.get(carry+1).get(x) == 0)
+                i++;
+            carry++;
+        }
+        i = 0;
+        possibleMoves[1] = new int[]{x, carry};
+
+        //left moves
+        carry = x;
+        while (i < tileVal){
+            if( carry <= 0 || carry+1 >= size)
+                break;
+            if(this.board.get(y).get(carry-1) == 0)
+                i++;
+            carry--;
+        }
+        i = 0;
+        possibleMoves[2] = new int[]{carry, y};
+
+        //right moves
+        carry = x;
+        while (i < tileVal){
+            if( carry <= 0 || carry+1 >= size)
+                break;
+            if(this.board.get(y).get(carry+1) == 0)
+                i++;
+            carry++;
+        }
+        possibleMoves[3] = new int[]{carry, y};
+
+        return possibleMoves;
+    }
+    public void moveTileUp(int x, int y ){
+            ArrayList<ArrayList<Integer>> prev = (ArrayList<ArrayList<Integer>>) this.board.clone();
+            this.previousBoards.add(prev);
+
+            int val = this.getTileValue(x,y);
+            this.board.get(y).set(x,-1);
+            int i = y;
+            while(val > 0){
+                i--;
+                if(this.board.get(i).get(x) == 0 || this.board.get(i).get(x) == -2){
+                    this.board.get(i).set(x,-1);
+                    val--;
+                }
+                if(i == 0){
+                    break;
+                }
+            }
+    }
+    public void moveTileDown(int x, int y ){
+            ArrayList<ArrayList<Integer>> prev = (ArrayList<ArrayList<Integer>>) this.board.clone();
+            previousBoards.add(prev);
+
+        int val = this.getTileValue(x,y);
+            this.board.get(y).set(x,-1);
+            int i = y;
+            while(val > 0){
+                i++;
+                if(i == this.board.get(0).size()){
+                    break;
+                }
+                if(this.board.get(i).get(x) == 0 || this.board.get(i).get(x) == -2) {
+                    this.board.get(i).set(x, -1);
+                    val--;
+                }
+            }
+
+    }
+    public void moveTileLeft(int x, int y ){
+        ArrayList<ArrayList<Integer>> prev = (ArrayList<ArrayList<Integer>>) this.board.clone();
+        previousBoards.add(prev);
+
+        int val = this.getTileValue(x,y);
+        this.board.get(y).set(x,-1);
+            int i = x;
+            while(val > 0){
+                i--;
+                if(this.board.get(y).get(i) == 0 || this.board.get(y).get(i) == -2){
+                    this.board.get(y).set(i,-1);
+                    val--;
+                }
+                if(i == 0){
+                    break;
+                }
+        }
+    }
+    public void moveTileRight(int x, int y ){
+        ArrayList<ArrayList<Integer>> prev = (ArrayList<ArrayList<Integer>>) this.board.clone();
+        previousBoards.add(prev);
+
+        int val = this.getTileValue(x,y);
+            this.board.get(y).set(x,-1);
+            int i = x;
+            while(val > 0){
+                i++;
+                if(i == this.board.get(0).size()){
+                    break;
+                }
+                if(this.board.get(y).get(i) == 0 || this.board.get(y).get(i) == -2){
+                    this.board.get(y).set(i,-1);
+                    val--;
+                }
+            }
+
     }
 
     public ArrayList<ArrayList<Integer>> getBoard(){
         return this.board;
     }
 
+    public int getTileValue(int x, int y){
+        return this.board.get(y).get(x);
+    }
+
     public void run() throws IOException {
         while (true) {
             this.gameView.run();
-            event.processKey();
+            this.keyEvent = event.processKey();
             cursor.processKeyEvent(this.keyEvent);
         }
     }

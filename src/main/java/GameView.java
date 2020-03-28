@@ -144,7 +144,7 @@ public class GameView {
         textGraphics.putString(new TerminalPosition(cursor.getX()+1, cursor.getY()+1), " ");
         textGraphics.putString(new TerminalPosition(cursor.getX()-1, cursor.getY()+1), " ");
 
-        Integer element = board.get(0).get(0);
+        Integer element = board.get(cursor.getY()/3-1).get(cursor.getX()/4-1);
         if (element == 0)
             textGraphics.putString(new TerminalPosition(cursor.getX(), cursor.getY()), " ");
         else if (element == -2)
@@ -155,11 +155,101 @@ public class GameView {
         else textGraphics.putString(new TerminalPosition(cursor.getX(), cursor.getY()), " ");
     }
 
+    private void draw_tiles_to_move(TextGraphics textGraphics){
+
+        //Line of numbers
+        textGraphics.enableModifiers(SGR.BOLD);
+        textGraphics.setBackgroundColor(TextColor.Factory.fromString("#0000FF"));
+        textGraphics.setBackgroundColor(TextColor.Factory.fromString("#FACA30"));
+
+        int[][] possibleMoves = this.cursor.getPossibleMoves();
+
+        if(possibleMoves[0][0] != -1){
+            //todo avoid dots on -1 tiles
+
+            int game_x = this.cursor.getGameX();
+            int game_y;
+            int real_x = this.cursor.getX();
+            int real_y = this.cursor.getY();
+            int aux;
+            int i = 1;
+
+            //top
+            aux = possibleMoves[0][1];
+            game_y = this.cursor.getGameY();
+            while(game_y >  aux ){
+                textGraphics.putString(new TerminalPosition(real_x, real_y-i*3), ".");
+                i++;
+                game_y--;
+            }
+
+            //bottom
+            i = 1;
+            aux = possibleMoves[1][1];
+            game_y = this.cursor.getGameY();
+            while(game_y < aux ){
+                textGraphics.putString(new TerminalPosition(real_x, real_y+i*3), ".");
+                i++;
+                game_y++;
+            }
+
+            //left
+            i =1;
+            aux = possibleMoves[2][0];
+            while(game_x != aux ){
+                textGraphics.putString(new TerminalPosition(real_x-i*4, real_y), ".");
+                i++;
+                game_x--;
+            }
+
+
+            //right
+            i=1;
+            aux = possibleMoves[3][0];
+            game_x = this.cursor.getGameX();
+            while(game_x < aux ){
+                textGraphics.putString(new TerminalPosition(real_x+i*4, real_y), ".");
+                i++;
+                game_x++;
+            }
+
+
+            /*
+            int game_x =  this.cursor.getGameCoords()[0];
+            int game_y =  this.cursor.getGameCoords()[1];
+            int real_x = this.cursor.getX();
+            int real_y = this.cursor.getY();
+
+            //get value
+            int value = this.board.get(game_y).get(game_x);
+
+            //todo board borders
+            for(int i = 1; i < value+1; i++){
+                textGraphics.putString(new TerminalPosition(real_x+i*4, real_y), ".");
+                textGraphics.putString(new TerminalPosition(real_x, real_y+i*3), ".");
+                textGraphics.putString(new TerminalPosition(real_x-i*4, real_y), ".");
+                textGraphics.putString(new TerminalPosition(real_x, real_y-i*3), ".");
+            }*/
+        }
+    }
+
+    private void draw_instructions(TextGraphics textGraphics){
+        textGraphics.setBackgroundColor(TextColor.Factory.fromString("#d3d7d5"));
+        textGraphics.setForegroundColor(TextColor.Factory.fromString("#000000"));
+        textGraphics.putString(new TerminalPosition(0, board.get(0).size()*3+4), "How To play: ");
+        textGraphics.putString(new TerminalPosition(0, board.get(0).size()*3+5), "Arrows - Move the cursor ");
+        textGraphics.putString(new TerminalPosition(0, board.get(0).size()*3+6), "Enter - Select/Unselect  elements ");
+        textGraphics.putString(new TerminalPosition(0, board.get(0).size()*3+7), "Z - Undo move ");
+        textGraphics.putString(new TerminalPosition(0, board.get(0).size()*3+8), "Escape - Exit the game");
+    }
+
     private void draw() throws IOException {
         this.screen.clear();
         TextGraphics textGraphics = this.screen.newTextGraphics();
         draw_board(textGraphics);
+        draw_instructions(textGraphics);
         draw_cursor(textGraphics);
+        draw_tiles_to_move(textGraphics);
         this.screen.refresh();
     }
 

@@ -14,18 +14,28 @@ public class Event {
         this.event = event;
     }
 
-    public void processKey() throws IOException {
+    public Puzzle.keyEvent processKey() throws IOException {
         key = screen.readInput();
 
-        if (key.getKeyType() == KeyType.ArrowDown) {
+        if (key.getKeyType() == KeyType.ArrowDown)
             this.event = Puzzle.keyEvent.MOVE_DOWN;
-            System.out.println("ola");
-        }
-        if (key.getKeyType() == KeyType.ArrowUp)
+        else if (key.getKeyType() == KeyType.ArrowUp)
             this.event = Puzzle.keyEvent.MOVE_UP;
-        if (key.getKeyType() == KeyType.ArrowLeft)
+        else if (key.getKeyType() == KeyType.ArrowLeft)
             this.event = Puzzle.keyEvent.MOVE_LEFT;
-        if (key.getKeyType() == KeyType.ArrowRight)
+        else if (key.getKeyType() == KeyType.ArrowRight)
             this.event = Puzzle.keyEvent.MOVE_RIGHT;
+        else if (key.getKeyType() == KeyType.Enter){
+            if(this.event != Puzzle.keyEvent.SELECT){
+                this.event = Puzzle.keyEvent.SELECT;
+            }
+           // else this.event = Puzzle.keyEvent.UNSELECT;
+        }
+        //else if(key.getKeyType() == KeyType.valueOf("c") )
+           // this.event = Puzzle.keyEvent.UNDO;
+        else if(key.getKeyType() == KeyType.Escape)
+            this.event = Puzzle.keyEvent.STOP;
+
+        return this.event;
     }
 }
