@@ -217,23 +217,6 @@ public class GameView {
                 game_x++;
             }
 
-
-            /*
-            int game_x =  this.cursor.getGameCoords()[0];
-            int game_y =  this.cursor.getGameCoords()[1];
-            int real_x = this.cursor.getX();
-            int real_y = this.cursor.getY();
-
-            //get value
-            int value = this.board.get(game_y).get(game_x);
-
-            //todo board borders
-            for(int i = 1; i < value+1; i++){
-                textGraphics.putString(new TerminalPosition(real_x+i*4, real_y), ".");
-                textGraphics.putString(new TerminalPosition(real_x, real_y+i*3), ".");
-                textGraphics.putString(new TerminalPosition(real_x-i*4, real_y), ".");
-                textGraphics.putString(new TerminalPosition(real_x, real_y-i*3), ".");
-            }*/
         }
     }
 

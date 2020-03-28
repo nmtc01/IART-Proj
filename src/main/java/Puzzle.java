@@ -13,9 +13,9 @@ class Puzzle {
         MOVE_LEFT,
         MOVE_RIGHT,
         SELECT,
-        UNSELECT,
         UNDO,
-        STOP
+        STOP,
+        QUIT
     }
 
     private String filename;
@@ -35,6 +35,28 @@ class Puzzle {
        this.gameView = new GameView(this.window.getScreen(), this.board, this.cursor);
        this.event = new Event(window.getScreen(), this.keyEvent);
        this.previousBoards = new ArrayList<ArrayList<ArrayList<Integer>>>();
+    }
+
+    public void run() throws IOException {
+        /** Algorithm Testing*/
+        /*Greedy algorithm = new Greedy(this.getBoard());
+
+        draw(this.getBoard());
+
+        System.out.println("");
+
+        ExpansionTree.Node<ArrayList<ArrayList<Integer>>> s = algorithm.perform();
+
+        ArrayList<ArrayList<Integer>> finalBoard = s.getData();
+
+        draw(finalBoard);
+        */
+
+        while (true) {
+            this.gameView.run();
+            this.keyEvent = event.processKey();
+            cursor.processKeyEvent(this.keyEvent);
+        }
     }
 
     /* ---- Utils  ---- */
@@ -77,7 +99,13 @@ class Puzzle {
     //game calculation;
     public int[][] getPossibleMoves(int x, int y){ //always returns 4 moves no matter what
         int[][] possibleMoves = new int[4][1];
+        
         int tileVal = this.getTileValue(x,y);
+        if(tileVal == 0){
+            int[][] noMoves = new int[0][]; 
+            return noMoves; 
+        }
+        
         int size = this.board.get(0).size();
 
         int i = tileVal;
@@ -237,28 +265,6 @@ class Puzzle {
 
     public int getTileValue(int x, int y){
         return this.board.get(y).get(x);
-    }
-
-    public void run() throws IOException {
-        /** Algorithm Testing*/
-        /*Greedy algorithm = new Greedy(this.getBoard());
-
-        draw(this.getBoard());
-
-        System.out.println("");
-
-        ExpansionTree.Node<ArrayList<ArrayList<Integer>>> s = algorithm.perform();
-
-        ArrayList<ArrayList<Integer>> finalBoard = s.getData();
-
-        draw(finalBoard);
-        */
-
-        while (true) {
-            this.gameView.run();
-            this.keyEvent = event.processKey();
-            cursor.processKeyEvent(this.keyEvent);
-        }
     }
 
     public void draw(ArrayList<ArrayList<Integer>> matrix){
