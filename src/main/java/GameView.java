@@ -19,9 +19,12 @@ public class GameView {
         this.cursor = cursor;
     }
 
-    public void setBoard(ArrayList<ArrayList<Integer>> board) {
-        this.board = board;
+    public GameView(Screen screen, ArrayList<ArrayList<Integer>> matrix) {
+        this.screen = screen;
+        this.board = matrix;
     }
+
+    public void setBoard(ArrayList<ArrayList<Integer>> board) { this.board = board; }
 
     private void draw_board(TextGraphics textGraphics) {
         //Rectangle
@@ -235,7 +238,8 @@ public class GameView {
         TextGraphics textGraphics = this.screen.newTextGraphics();
         draw_board(textGraphics);
         draw_instructions(textGraphics);
-        draw_cursor(textGraphics);
+        if(!this.cursor.getHidden())
+            draw_cursor(textGraphics);
         draw_tiles_to_move(textGraphics);
         this.screen.refresh();
     }

@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 class Puzzle {
     public enum keyEvent{
@@ -37,26 +38,30 @@ class Puzzle {
        this.previousBoards = new ArrayList<ArrayList<ArrayList<Integer>>>();
     }
 
-    public void run() throws IOException {
-        /** Algorithm Testing*/
-        /*Greedy algorithm = new Greedy(this.getBoard());
+    public void run() throws IOException, InterruptedException {
+        //Calculate Algo
+        cursor.hide();
+        this.gameView.run();
 
-        draw(this.getBoard());
+        // 1 - Get algo type
+        Greedy algorithm = new Greedy(this.getBoard());
+        ExpansionTree.Node<ArrayList<ArrayList<Integer>>> root = algorithm.perform();
+        ArrayList<ArrayList<ArrayList<Integer>>> solution = algorithm.getSolution(root);
 
-        System.out.println("");
+        //Computer Playing
+        for(int i=0; i< solution.size(); i++){
+            TimeUnit.SECONDS.sleep(1); //todo remove maybe?? testing purposes
+            this.gameView.setBoard(solution.get(i));
+            this.gameView.run();
+        }
 
-        ExpansionTree.Node<ArrayList<ArrayList<Integer>>> s = algorithm.perform();
-
-        ArrayList<ArrayList<Integer>> finalBoard = s.getData();
-
-        draw(finalBoard);
-        */
-
+        //Human PLayer
+            /*
         while (true) {
             this.gameView.run();
             this.keyEvent = event.processKey();
             cursor.processKeyEvent(this.keyEvent);
-        }
+        }*/
     }
 
     /* ---- Utils  ---- */

@@ -1,6 +1,8 @@
 package solver;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class Solver {
 
@@ -209,5 +211,24 @@ public class Solver {
             }
         }
         return true;
+    }
+
+    public ArrayList<ArrayList<ArrayList<Integer>>> getSolution(ExpansionTree.Node<ArrayList<ArrayList<Integer>>> solutionRoot){
+
+        ArrayList<ArrayList<ArrayList<Integer>>> solution = new ArrayList<>();
+
+        ExpansionTree.Node<ArrayList<ArrayList<Integer>>> currentNode = solutionRoot;
+
+        int i = 10;
+
+        while(currentNode.getParent() != null ){
+            solution.add(currentNode.getData());
+            currentNode = currentNode.getParent();
+            i--;
+        }
+        solution.add(currentNode.getData());
+        Collections.reverse(solution);
+
+        return solution;
     }
 }

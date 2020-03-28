@@ -30,11 +30,8 @@ public class Event {
                 this.event = Puzzle.keyEvent.SELECT;
             }
            // else this.event = Puzzle.keyEvent.UNSELECT;
-        }  else if(key.getKeyType() == KeyType.Escape) {
-            System.out.println(this.event);
+        }  else if(key.getKeyType() == KeyType.Escape)
             this.event = Puzzle.keyEvent.QUIT;
-            System.out.println(this.event);
-        }
         else if(key.getCharacter() == 'z' || key.getCharacter() == 'Z')
             this.event = Puzzle.keyEvent.UNDO;
 

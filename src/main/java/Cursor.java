@@ -7,6 +7,7 @@ public class Cursor {
     private int y;
     private int size;
     private  boolean cursorSelect;
+    private  boolean hidden;
     private Puzzle puzzle;
 
     public Cursor(Puzzle puzzle) {
@@ -14,11 +15,11 @@ public class Cursor {
         this.y = 4;
         this.size = puzzle.getBoard().size();
         this.cursorSelect = false;
+        this.hidden = false;
         this.puzzle = puzzle;
     }
 
     public void processKeyEvent(Puzzle.keyEvent keyEvent) {
-        System.out.println(keyEvent);
         if (keyEvent == Puzzle.keyEvent.MOVE_DOWN)
             moveDown();
         else if (keyEvent == Puzzle.keyEvent.MOVE_UP)
@@ -33,6 +34,16 @@ public class Cursor {
             undoMove();
         else if (keyEvent == Puzzle.keyEvent.QUIT)
             System.exit(0);
+    }
+
+    public void hide(){
+        this.hidden = true;
+    }
+    public void show(){
+        this.hidden = false;
+    }
+    public boolean getHidden(){
+        return this.hidden;
     }
 
     public void moveDown(){
