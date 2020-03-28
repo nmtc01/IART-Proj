@@ -1,5 +1,3 @@
-import sun.jvmstat.perfdata.monitor.MonitorVersionException;
-
 import java.util.Arrays;
 
 public class Cursor {
@@ -16,7 +14,7 @@ public class Cursor {
         this.y = 4;
         this.size = puzzle.getBoard().size();
         this.cursorSelect = false;
-        this.puzzle =puzzle;
+        this.puzzle = puzzle;
     }
 
     public void processKeyEvent(Puzzle.keyEvent keyEvent) {
@@ -32,7 +30,7 @@ public class Cursor {
         else if(keyEvent == Puzzle.keyEvent.SELECT)
             showMoves();
         else if(keyEvent == Puzzle.keyEvent.UNDO)
-            System.out.println("Undo (todo)");
+            undoMove();
         else if (keyEvent == Puzzle.keyEvent.STOP)
             System.exit(0);
     }
@@ -87,6 +85,10 @@ public class Cursor {
         //get board info
         //System.out.println("Value: " + Puzzle.getTileValue(x,y));
         System.out.println(Arrays.deepToString(this.puzzle.getPossibleMoves(x, y)));
+    }
+
+    public void undoMove(){
+        this.puzzle.undoMove();
     }
 
     public int[] getGameCoords(){

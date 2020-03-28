@@ -31,8 +31,8 @@ public class Event {
             }
            // else this.event = Puzzle.keyEvent.UNSELECT;
         }
-        //else if(key.getKeyType() == KeyType.valueOf("c") )
-           // this.event = Puzzle.keyEvent.UNDO;
+        else if(key.getCharacter() == 'z' || key.getCharacter() == 'Z')
+            this.event = Puzzle.keyEvent.UNDO;
         else if(key.getKeyType() == KeyType.Escape)
             this.event = Puzzle.keyEvent.STOP;
 

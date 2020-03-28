@@ -134,22 +134,25 @@ class Puzzle {
         return possibleMoves;
     }
     public void moveTileUp(int x, int y ){
-            ArrayList<ArrayList<Integer>> prev = (ArrayList<ArrayList<Integer>>) this.board.clone();
-            this.previousBoards.add(prev);
+        ArrayList<ArrayList<Integer>> prev = (ArrayList<ArrayList<Integer>>) this.board.clone();
+        this.previousBoards.add(prev);
+        UI UI = new UI();
+        UI.draw_puzzle(previousBoards.get(0));
 
-            int val = this.getTileValue(x,y);
-            this.board.get(y).set(x,-1);
-            int i = y;
-            while(val > 0){
-                i--;
-                if(this.board.get(i).get(x) == 0 || this.board.get(i).get(x) == -2){
-                    this.board.get(i).set(x,-1);
-                    val--;
-                }
-                if(i == 0){
-                    break;
-                }
+        int val = this.getTileValue(x,y);
+        this.board.get(y).set(x,-1);
+        int i = y;
+        while(val > 0){
+            i--;
+            if(this.board.get(i).get(x) == 0 || this.board.get(i).get(x) == -2){
+                this.board.get(i).set(x,-1);
+                val--;
             }
+            if(i == 0){
+                break;
+            }
+        }
+        UI.draw_puzzle(previousBoards.get(0));
     }
     public void moveTileDown(int x, int y ){
             ArrayList<ArrayList<Integer>> prev = (ArrayList<ArrayList<Integer>>) this.board.clone();
@@ -206,6 +209,12 @@ class Puzzle {
                 }
             }
 
+    }
+    public void undoMove() {
+        if (previousBoards.size() > 0) {
+            this.board = (ArrayList<ArrayList<Integer>>)previousBoards.get(previousBoards.size() - 1).clone();
+            previousBoards.remove(previousBoards.size() - 1);
+        }
     }
 
     public ArrayList<ArrayList<Integer>> getBoard(){
