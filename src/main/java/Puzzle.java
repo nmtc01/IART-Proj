@@ -78,12 +78,16 @@ class Puzzle {
         }
     */
         // If Human PLayer - draw with handler
+        Solver solver = new Solver(this.board);
         cursor.show();
 
         while (true) {
             this.gameView.run();
             this.keyEvent = event.processKey();
             cursor.processKeyEvent(this.keyEvent);
+            if (solver.isEnd(this.board)) {
+                this.cursor.hide();
+            }
         }
     }
 
