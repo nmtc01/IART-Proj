@@ -28,6 +28,8 @@ public class Cursor {
             moveLeft();
         else if (keyEvent == Puzzle.keyEvent.MOVE_RIGHT)
             moveRight();
+        else if(keyEvent == Puzzle.keyEvent.HINT)
+            getHint();
         else if(keyEvent == Puzzle.keyEvent.SELECT)
             showMoves();
         else if(keyEvent == Puzzle.keyEvent.UNDO)
@@ -94,6 +96,9 @@ public class Cursor {
         this.puzzle.undoMove();
     }
 
+    public void getHint(){
+        this.puzzle.getHint();
+    }
     //todo delete if not needed
     public int[] getGameCoords(){
         return new int[] {(this.getX() - 7) / 4, (this.getY() - 4) / 3};

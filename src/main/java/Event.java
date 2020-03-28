@@ -34,6 +34,8 @@ public class Event {
             this.event = Puzzle.keyEvent.QUIT;
         else if(key.getCharacter() == 'z' || key.getCharacter() == 'Z')
             this.event = Puzzle.keyEvent.UNDO;
+        else if(key.getCharacter() == 'h' || key.getCharacter() == 'H')
+            this.event = Puzzle.keyEvent.HINT;
 
         return this.event;
     }
