@@ -31,7 +31,7 @@ public class Cursor {
             showMoves();
         else if(keyEvent == Puzzle.keyEvent.UNDO)
             undoMove();
-        else if (keyEvent == Puzzle.keyEvent.STOP)
+        else if (keyEvent == Puzzle.keyEvent.QUIT)
             System.exit(0);
     }
 
@@ -46,7 +46,7 @@ public class Cursor {
 
     public void moveUp(){
         int tmp = this.y-3;
-        if(this.cursorSelect) {
+        if(this.cursorSelect ) {
             this.puzzle.moveTileUp(this.getGameX(), this.getGameY());
             this.cursorSelect = false;
         }else if (canMove(this.x, tmp))
@@ -56,7 +56,7 @@ public class Cursor {
     public void moveRight(){
         int tmp = this.x+4;
         if(this.cursorSelect){
-            this.puzzle.moveTileRight(this.getGameX(),this.getGameY()  );
+            this.puzzle.moveTileRight(this.getGameX(),this.getGameY());
             this.cursorSelect = false;
         }else if(canMove(tmp, this.y))
             this.x = tmp;
@@ -65,7 +65,7 @@ public class Cursor {
     public void moveLeft(){
         int tmp = this.x-4;
         if(this.cursorSelect){
-            this.puzzle.moveTileLeft(this.getGameX(),this.getGameY() );
+            this.puzzle.moveTileLeft(this.getGameX(),this.getGameY());
             this.cursorSelect = false;
         }else if (canMove(tmp, this.y))
             this.x = tmp;
@@ -73,24 +73,17 @@ public class Cursor {
 
     public void showMoves(){
         //set state to true
-        if(this.cursorSelect)
+        if(this.cursorSelect || this.puzzle.getPossibleMoves(this.getGameX(),this.getGameY()).length == 0)
             this.cursorSelect = false;
         else this.cursorSelect = true;
-        //real coords
-        System.out.println("Real coords: ("+this.getX()+ ","+this.getY()+")");
-        //game coords
-        int x =  this.getGameX();
-        int y = this.getGameY();
-        System.out.println("Game coords: ("+x+ ","+y+")"); //[(x,y) - (7,4)]/4
-        //get board info
-        //System.out.println("Value: " + Puzzle.getTileValue(x,y));
-        System.out.println(Arrays.deepToString(this.puzzle.getPossibleMoves(x, y)));
+
     }
 
     public void undoMove(){
         this.puzzle.undoMove();
     }
 
+    //todo delete if not needed
     public int[] getGameCoords(){
         return new int[] {(this.getX() - 7) / 4, (this.getY() - 4) / 3};
 
@@ -124,6 +117,7 @@ public class Cursor {
         else return error;
     }
 
+    //todo delete if not needed
     public boolean getCursorSelectState() {
         return this.cursorSelect;
     }
