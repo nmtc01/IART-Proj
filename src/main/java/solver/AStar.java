@@ -8,7 +8,7 @@ public class AStar extends Solver {
         super(initboard);
     }
 
-    /*public solver.ExpansionTree.Node<ArrayList<ArrayList<Integer>>> perform() {
+    /*public ExpansionTree.Node<ArrayList<ArrayList<Integer>>> perform() {
 
     }*/
 
