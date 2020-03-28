@@ -40,17 +40,18 @@ class Puzzle {
     public void run() throws IOException {
         /** Algorithm Testing*/
         /*Greedy algorithm = new Greedy(this.getBoard());
-
         draw(this.getBoard());
-
         System.out.println("");
-
         ExpansionTree.Node<ArrayList<ArrayList<Integer>>> s = algorithm.perform();
-
         ArrayList<ArrayList<Integer>> finalBoard = s.getData();
-
         draw(finalBoard);
         */
+        DFS dfs = new DFS((this.getBoard()));
+        draw(this.getBoard());
+        System.out.println("");
+        ExpansionTree.Node<ArrayList<ArrayList<Integer>>> s = dfs.perform();
+        ArrayList<ArrayList<Integer>> finalBoard = s.getData();
+        draw(finalBoard);
 
         while (true) {
             this.gameView.run();

@@ -6,8 +6,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class BFS extends Solver {
-    private Hashtable<Integer, ExpansionTree.Node> visitedNodes = new Hashtable<>();
-    private static Integer id = 0;
 
     public BFS(ArrayList<ArrayList<Integer>> initboard){
         super(initboard);
@@ -18,10 +16,6 @@ public class BFS extends Solver {
         ExpansionTree.Node<ArrayList<ArrayList<Integer>>> s = getCurrentState();
 
         Q.add(s);
-        if (!visitedNodes.contains(s)) {
-            visitedNodes.put(id, s);
-            id++;
-        }
         this.expand_state();
 
         while(!Q.isEmpty()) {
@@ -31,13 +25,9 @@ public class BFS extends Solver {
                 ExpansionTree.Node<ArrayList<ArrayList<Integer>>> w = v.getChildren().get(i);
                 if (isEnd(w))
                     return w;
-                if (!visitedNodes.contains(w)) {
-                    Q.add(w);
-                    this.setCurrentState(w);
-                    this.expand_state();
-                    visitedNodes.put(id, w);
-                    id++;
-                }
+                Q.add(w);
+                this.setCurrentState(w);
+                this.expand_state();
             }
         }
         return getStates().getRoot();
