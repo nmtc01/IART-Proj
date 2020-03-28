@@ -1,4 +1,5 @@
 import com.googlecode.lanterna.screen.Screen;
+import heuristic.CollisionCount;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -217,10 +218,131 @@ class Puzzle {
     }
 
     public void run() throws IOException {
-        while (true) {
+        /** Algorithm Testing*/
+        Greedy algorithm = new Greedy(this.getBoard());
+
+        draw(this.getBoard());
+
+        System.out.println("");
+
+        ExpansionTree.Node<ArrayList<ArrayList<Integer>>> s = algorithm.perform();
+
+        ArrayList<ArrayList<Integer>> finalBoard = s.getData();
+
+        draw(finalBoard);
+
+        /*while (true) {
             this.gameView.run();
             this.keyEvent = event.processKey();
             cursor.processKeyEvent(this.keyEvent);
+        }*/
+    }
+
+    public void draw(ArrayList<ArrayList<Integer>> matrix){
+        System.out.print('\n');
+        int mat_size = matrix.get(0).size();
+        System.out.print(' ');
+        System.out.print(' ');
+        for(int top = 0;top<mat_size; top++){
+
+            System.out.print(' ');
+            System.out.print(' ');
+            System.out.print(' ');
+            System.out.print(top);
+            System.out.print(' ');
+            System.out.print(' ');
         }
+        System.out.print("\n");
+
+        //draw first line on the console
+        System.out.print(' ');
+        System.out.print(' ');
+        System.out.print('╔');
+        for(int top = 0;top<matrix.get(0).size(); top++){
+
+            System.out.print('═');
+            System.out.print('═');
+            System.out.print('═');
+            System.out.print('═');
+            System.out.print('═');
+            if(top < mat_size -1)
+                System.out.print('╦');
+            else
+                System.out.print('╗');
+
+        }
+        System.out.print("\n");
+
+        //draw other lines
+        for(int line=0;line<matrix.size(); line++){
+            System.out.print(line);
+            System.out.print(' ');
+            for(int mid = 0;mid<matrix.get(line).size(); mid++){
+                System.out.print('║');
+
+                if(matrix.get(line).get(mid) == 0){
+                    System.out.print(' ');
+                    System.out.print(' ');
+                    System.out.print(' ');
+                    System.out.print(' ');
+                    System.out.print(' ');
+                }else if(matrix.get(line).get(mid) == -1){
+                    System.out.print('▒');
+                    System.out.print('▒');
+                    System.out.print('▒');
+                    System.out.print('▒');
+                    System.out.print('▒');
+                } else if(matrix.get(line).get(mid) == -2) {
+                    System.out.print(' ');
+                    System.out.print(' ');
+                    System.out.print('G');
+                    System.out.print(' ');
+                    System.out.print(' ');
+                } else  {
+                    System.out.print('░');
+                    System.out.print('░');
+                    System.out.print(matrix.get(line).get(mid));
+                    System.out.print('░');
+                    System.out.print('░');
+                }
+                if(mid == mat_size -1 )
+                    System.out.print('║');
+            }
+            System.out.print("\n");
+            if(line < mat_size -1) {
+                for (int top = 0; top < matrix.get(line).size(); top++) {
+                    if (top == 0){
+                        System.out.print(' ');
+                        System.out.print(' ');
+                        System.out.print('╠');
+                    }
+                    System.out.print('═');
+                    System.out.print('═');
+                    System.out.print('═');
+                    System.out.print('═');
+                    System.out.print('═');
+                    if (top < mat_size - 1)
+                        System.out.print('╬');
+                    else System.out.print('╣');
+                }
+                System.out.print("\n");
+            }
+        }
+
+        //draw last line on the console
+        System.out.print(' ');
+        System.out.print(' ');
+        System.out.print('╚');
+        for(int bot = 0;bot<matrix.get(0).size(); bot++){
+            System.out.print('═');
+            System.out.print('═');
+            System.out.print('═');
+            System.out.print('═');
+            System.out.print('═');
+            if(bot < mat_size -1)
+                System.out.print('╩');
+            else System.out.print('╝');
+        }
+        System.out.print("\n");
     }
 }
