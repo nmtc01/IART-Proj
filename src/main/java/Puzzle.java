@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 class Puzzle {
     public enum keyEvent{
@@ -12,6 +13,7 @@ class Puzzle {
         MOVE_DOWN,
         MOVE_LEFT,
         MOVE_RIGHT,
+        HINT,
         SELECT,
         UNDO,
         STOP,
@@ -21,6 +23,8 @@ class Puzzle {
     private String filename;
     private ArrayList<ArrayList<ArrayList<Integer>>> previousBoards;
     private ArrayList<ArrayList<Integer>> board;
+    private ArrayList<ArrayList<ArrayList<Integer>>> solution;
+    private int hintCounter;
     private Cursor cursor;
     private Event event;
     private GameView gameView;
@@ -37,7 +41,7 @@ class Puzzle {
        this.previousBoards = new ArrayList<ArrayList<ArrayList<Integer>>>();
     }
 
-    public void run() throws IOException {
+    public void run() throws IOException, InterruptedException {
         /** Algorithm Testing*/
         /*Greedy algorithm = new Greedy(this.getBoard());
         draw(this.getBoard());
@@ -53,6 +57,29 @@ class Puzzle {
         ArrayList<ArrayList<Integer>> finalBoard = s.getData();
         draw(finalBoard);
         */
+
+        //Calculate Algo
+        cursor.hide();
+        this.gameView.run();
+
+        // 1 - Get algo type
+        Greedy algorithm = new Greedy(this.getBoard());
+        // 2 - Solve algo and return the root with the solution
+        ExpansionTree.Node<ArrayList<ArrayList<Integer>>> root = algorithm.perform();
+        // 3 - Get the list with the steps to perform
+        this.solution = algorithm.getSolution(root);
+
+        // If Computer Playing - draw like this
+        /*
+        for(int i=0; i< solution.size(); i++){
+            TimeUnit.SECONDS.sleep(1); //todo remove maybe?? testing purposes
+            this.gameView.setBoard(solution.get(i));
+            this.gameView.run();
+        }
+    */
+        // If Human PLayer - draw with handler
+        cursor.show();
+
         while (true) {
             this.gameView.run();
             this.keyEvent = event.processKey();
@@ -260,6 +287,13 @@ class Puzzle {
         }
     }
 
+    public void getHint(){
+        this.hintCounter++;
+        this.board = solution.get(this.hintCounter);
+        this.previousBoards.clear();
+        this.gameView.setBoard(this.board);
+    }
+
     public ArrayList<ArrayList<Integer>> getBoard(){
         return this.board;
     }
@@ -268,6 +302,7 @@ class Puzzle {
         return this.board.get(y).get(x);
     }
 
+    //todo isto deu-me bue trabalho, mas ig que se apaga não?
     public void draw(ArrayList<ArrayList<Integer>> matrix){
         System.out.print('\n');
         int mat_size = matrix.get(0).size();
