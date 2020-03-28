@@ -253,11 +253,16 @@ class Puzzle {
 
         draw(finalBoard);
         */
+        Solver solver = new Solver(board);
 
         while (true) {
             this.gameView.run();
             this.keyEvent = event.processKey();
             cursor.processKeyEvent(this.keyEvent);
+            if (solver.isEnd(board)) {
+                this.gameView.run();
+                break;
+            }
         }
     }
 

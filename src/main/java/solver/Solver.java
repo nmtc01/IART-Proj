@@ -200,4 +200,14 @@ public class Solver {
         }
         return true;
     }
+
+    public boolean isEnd(ArrayList<ArrayList<Integer>> state){
+        for (int i = 0; i < state.get(0).size(); i++) {
+            for (int j = 0; j < state.get(0).size(); j++) {
+                if (state.get(i).get(j) == -2)
+                    return false;
+            }
+        }
+        return true;
+    }
 }
