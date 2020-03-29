@@ -9,8 +9,8 @@ public class Application {
     public static void main(String[] args) {
         //Get puzzle
         System.out.print("Puzzle name: ");
-        Scanner input = new Scanner(System.in);
-        String file_name = input.nextLine();
+        //Scanner input = new Scanner(System.in);
+        //String file_name = input.nextLine();
 
         Window window = new Window(10);
         Menu menu = new Menu(window.getScreen());
@@ -29,7 +29,7 @@ public class Application {
         String level = mode.getLevel();
         String algorithm = mode.getAlgorithm();
 
-        Puzzle puzzle = new Puzzle(file_name);
+        Puzzle puzzle = new Puzzle(level);
 
         try {
             puzzle.run();

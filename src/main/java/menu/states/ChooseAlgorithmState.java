@@ -1,5 +1,9 @@
 package menu.states;
 
+import com.googlecode.lanterna.SGR;
+import com.googlecode.lanterna.TerminalPosition;
+import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
@@ -24,6 +28,11 @@ public class ChooseAlgorithmState implements MenuState {
 
     @Override
     public void draw(TextGraphics textGraphics) {
+        drawAlgorithmButton(textGraphics, "BFS", 0);
+        drawAlgorithmButton(textGraphics, "DFS", 1);
+        drawAlgorithmButton(textGraphics, "Uniform Cost", 2);
+        drawAlgorithmButton(textGraphics, "Greedy", 3);
+        drawAlgorithmButton(textGraphics, "A*", 4);
 
     }
 
@@ -71,15 +80,27 @@ public class ChooseAlgorithmState implements MenuState {
         return this;
     }
 
+    private void drawAlgorithmButton(TextGraphics textGraphics, String algorithm, int order){
+        if (overButton == order){
+            textGraphics.setBackgroundColor(TextColor.Factory.fromString("#FBDE44"));
+        }
+        else textGraphics.setBackgroundColor(TextColor.Factory.fromString("#28334A"));
+
+        textGraphics.fillRectangle(new TerminalPosition(14, 14 + order * 4), new TerminalSize(20, 4), ' ');
+        textGraphics.setForegroundColor(TextColor.Factory.fromString("#FF6600"));
+        textGraphics.enableModifiers(SGR.BOLD);
+        textGraphics.putString(new TerminalPosition(16, 16 + order * 4), algorithm);
+    }
+
     private void moveUp() {
         overButton--;
         if (overButton < 0)
-            overButton = 2;
+            overButton = 4;
     }
 
     private void moveDown() {
         overButton++;
-        if (overButton > 2)
+        if (overButton > 4)
             overButton = 0;
     }
 }

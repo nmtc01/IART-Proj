@@ -30,7 +30,7 @@ public class MainState implements MenuState {
 
     @Override
     public void draw(TextGraphics textGraphics) {
-        drawNewGameButton(textGraphics);
+        drawPlayButton(textGraphics);
         drawSolvePuzzleButton(textGraphics);
         drawQuitButton(textGraphics);
     }
@@ -68,40 +68,40 @@ public class MainState implements MenuState {
         return this;
     }
 
-    private void drawNewGameButton(TextGraphics textGraphics){
+    private void drawPlayButton(TextGraphics textGraphics){
         if (overButton == 0){
-            textGraphics.setBackgroundColor(TextColor.Factory.fromString("#00FF00"));
+            textGraphics.setBackgroundColor(TextColor.Factory.fromString("#FBDE44"));
         }
-        else textGraphics.setBackgroundColor(TextColor.Factory.fromString("#FFFFFF"));
+        else textGraphics.setBackgroundColor(TextColor.Factory.fromString("#28334A"));
 
-        textGraphics.fillRectangle(new TerminalPosition(16, 4), new TerminalSize(32, 4), ' ');
+        textGraphics.fillRectangle(new TerminalPosition(10, 16), new TerminalSize(32, 4), ' ');
         textGraphics.setForegroundColor(TextColor.Factory.fromString("#FF6600"));
         textGraphics.enableModifiers(SGR.BOLD);
-        textGraphics.putString(new TerminalPosition(28, 6), "PLAY!");
+        textGraphics.putString(new TerminalPosition(24, 18), "PLAY!");
     }
 
     private void drawSolvePuzzleButton(TextGraphics textGraphics){
         if (overButton == 1){
-            textGraphics.setBackgroundColor(TextColor.Factory.fromString("#00FF00"));
+            textGraphics.setBackgroundColor(TextColor.Factory.fromString("#FBDE44"));
         }
-        else textGraphics.setBackgroundColor(TextColor.Factory.fromString("#FFFFFF"));
+        else textGraphics.setBackgroundColor(TextColor.Factory.fromString("#28334A"));
 
-        textGraphics.fillRectangle(new TerminalPosition(16, 12), new TerminalSize(32, 4), ' ');
+        textGraphics.fillRectangle(new TerminalPosition(10, 22), new TerminalSize(32, 4), ' ');
         textGraphics.setForegroundColor(TextColor.Factory.fromString("#FF6600"));
         textGraphics.enableModifiers(SGR.BOLD);
-        textGraphics.putString(new TerminalPosition(28, 14), "SOLVE PUZZLE");
+        textGraphics.putString(new TerminalPosition(20, 24), "SOLVE PUZZLE");
     }
 
     private void drawQuitButton(TextGraphics textGraphics){
         if (overButton == 2){
-            textGraphics.setBackgroundColor(TextColor.Factory.fromString("#00FF00"));
+            textGraphics.setBackgroundColor(TextColor.Factory.fromString("#FBDE44"));
         }
-        else textGraphics.setBackgroundColor(TextColor.Factory.fromString("#FFFFFF"));
+        else textGraphics.setBackgroundColor(TextColor.Factory.fromString("#28334A"));
 
-        textGraphics.fillRectangle(new TerminalPosition(16, 28), new TerminalSize(32, 4), ' ');
+        textGraphics.fillRectangle(new TerminalPosition(10, 28), new TerminalSize(32, 4), ' ');
         textGraphics.setForegroundColor(TextColor.Factory.fromString("#FF6600"));
         textGraphics.enableModifiers(SGR.BOLD);
-        textGraphics.putString(new TerminalPosition(30, 30), "QUIT");
+        textGraphics.putString(new TerminalPosition(24, 30), "QUIT");
     }
 
     private void moveUp() {

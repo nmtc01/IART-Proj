@@ -9,18 +9,37 @@ import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @SuppressWarnings("Duplicates")
 public class ChooseLevelState implements MenuState {
     private Screen screen;
     private int overButton;
     public Mode mode;
+    int numberOfLevels;
 
     public ChooseLevelState(Screen screen){
         this.screen = screen;
         this.overButton = 0;
         mode = new Mode();
+
+
+        String root = System.getProperty("user.dir");
+        String filepathWin = "\\src\\main\\resources\\puzzle"; // in case of Windows: "\\path \\to\\yourfile.txt
+        String filepathUnix = "/src/main/resources/puzzle";
+        String path = root+filepathWin;
+
+        File folder = new File(path);
+
+        if (folder == null) {
+            path = root + filepathUnix;
+            folder = new File(path);
+        }
+
+        File[] listOfFiles = folder.listFiles();
+        numberOfLevels = listOfFiles.length;
     }
 
     public Mode getMode() {
@@ -29,7 +48,9 @@ public class ChooseLevelState implements MenuState {
 
     @Override
     public void draw(TextGraphics textGraphics) {
-        drawLevelButton(textGraphics, "lvl1");
+        for (int i = 1; i <= numberOfLevels; i++) {
+            drawLevelButton(textGraphics, "lvl" + i, i - 1);
+        }
     }
 
     @Override
@@ -52,83 +73,64 @@ public class ChooseLevelState implements MenuState {
         if (key.getKeyType() == KeyType.ArrowDown)
             moveDown();
 
+        if (key.getKeyType() == KeyType.ArrowLeft)
+            moveLeft();
+
+        if (key.getKeyType() == KeyType.ArrowRight)
+            moveRight();
+
         if (key.getKeyType() == KeyType.Enter){
-            switch (overButton) {
-                case 0:
-                    mode.setLevel("lvl1");
-                    break;
-                case 1:
-                    mode.setLevel("lvl2");
-                    break;
-                case 2:
-                    mode.setLevel("lvl3");
-                    break;
-                case 3:
-                    mode.setLevel("lvl4");
-                    break;
-                case 4:
-                    mode.setLevel("lvl5");
-                    break;
-                case 5:
-                    mode.setLevel("lvl6");
-                    break;
-                case 6:
-                    mode.setLevel("lvl7");
-                    break;
-                case 7:
-                    mode.setLevel("lvl8");
-                    break;
-                case 8:
-                    mode.setLevel("lvl9");
-                    break;
-                case 9:
-                    mode.setLevel("lvl10");
-                    break;
-                case 10:
-                    mode.setLevel("lvl11");
-                    break;
-                case 11:
-                    mode.setLevel("lvl12");
-                    break;
-                case 12:
-                    mode.setLevel("lvl13");
-                    break;
-                case 13:
-                    mode.setLevel("lvl14");
-                    break;
-                case 14:
-                    mode.setLevel("lvl15");
-                    break;
-                case 15:
-                    mode.setLevel("lvl16");
-                    break;
-            }
+            mode.setLevel("lvl"+(overButton+1));
         }
         return this;
     }
 
-    private void drawLevelButton(TextGraphics textGraphics, String level){
-        if (overButton == 0){
-            textGraphics.setBackgroundColor(TextColor.Factory.fromString("#00FF00"));
+    private void drawLevelButton(TextGraphics textGraphics, String level, int order){
+        if (overButton == order){
+            textGraphics.setBackgroundColor(TextColor.Factory.fromString("#FBDE44"));
         }
-        else textGraphics.setBackgroundColor(TextColor.Factory.fromString("#FFFFFF"));
+        else textGraphics.setBackgroundColor(TextColor.Factory.fromString("#28334A"));
 
-        textGraphics.fillRectangle(new TerminalPosition(16, 8), new TerminalSize(32, 4), ' ');
+        /*
+        * Constants:
+        * 10 levels per column
+        * 50 window width
+        * */
+
+        int columnsOfLevels = numberOfLevels / 10;
+        if (numberOfLevels % 10 > 0)
+            columnsOfLevels++;
+        int columnFactor = (int)((float) 50 / columnsOfLevels);
+        int column = order / 10;
+
+        textGraphics.fillRectangle(new TerminalPosition(column * columnFactor + 5, 8 + order % 10 * 3), new TerminalSize(8, 2), ' ');
         textGraphics.setForegroundColor(TextColor.Factory.fromString("#FF6600"));
         textGraphics.enableModifiers(SGR.BOLD);
-        textGraphics.putString(new TerminalPosition(28, 10), level);
+        textGraphics.putString(new TerminalPosition(column * columnFactor + 7, 9 + order % 10 * 3), level);
     }
 
 
     private void moveUp() {
         overButton--;
         if (overButton < 0)
-            overButton = 2;
+            overButton = numberOfLevels - 1;
     }
 
     private void moveDown() {
         overButton++;
-        if (overButton > 2)
+        if (overButton >= numberOfLevels)
+            overButton = 0;
+    }
+
+    private void moveLeft() {
+        overButton -= 10;
+        if (overButton < 0)
+            overButton = numberOfLevels - 1;
+    }
+
+    private void moveRight() {
+        overButton += 10;
+        if (overButton >= numberOfLevels)
             overButton = 0;
     }
 

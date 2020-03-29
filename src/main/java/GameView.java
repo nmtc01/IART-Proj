@@ -140,7 +140,7 @@ public class GameView {
 
     private void draw_cursor(TextGraphics textGraphics) {
         textGraphics.enableModifiers(SGR.BOLD);
-        textGraphics.setBackgroundColor(TextColor.Factory.fromString("#F65058"));
+        textGraphics.setBackgroundColor(TextColor.Factory.fromString("#FF6600"));
 
         textGraphics.putString(new TerminalPosition(cursor.getX()+1, cursor.getY()), " ");
         textGraphics.putString(new TerminalPosition(cursor.getX()-1, cursor.getY()), " ");
