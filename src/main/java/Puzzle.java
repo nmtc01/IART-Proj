@@ -34,26 +34,25 @@ class Puzzle {
     private Window window;
     private keyEvent keyEvent;
 
-    public Puzzle(String filename,String gameMode,String algorithm, Window window)  {
+    public Puzzle(String filename,String gameMode,String algorithm)  {
        this.filename = filename;
        this.gameMode = gameMode;
        this.algorithm = algorithm;
        this.board = this.read_puzzle();
-       this.window = window; //new Window(board.size());
+       //this.window = window; //new Window(board.size());
        this.cursor = new Cursor(this);
-        this.gameView = new GameView(this.window.getScreen(), this.board, this.cursor);
-        this.event = new Event(window.getScreen(), this.keyEvent);
+        //this.gameView = new GameView(this.window.getScreen(), this.board, this.cursor);
+        //this.event = new Event(window.getScreen(), this.keyEvent);
        this.previousBoards = new ArrayList<ArrayList<ArrayList<Integer>>>();
     }
 
     public void run() throws IOException, InterruptedException {
-
-        System.out.println(this.algorithm);
-        System.out.println(this.gameMode);
+        //System.out.println(this.algorithm);
+        //System.out.println(this.gameMode);
 
         //Calculate Algo
-        cursor.hide();
-        this.gameView.run();
+        //cursor.hide();
+        //this.gameView.run();
 
         /**
          * Time Start
@@ -100,7 +99,8 @@ class Puzzle {
 
         System.out.println("Time Elapsed (ms): " + timeElapsed);
 
-
+        return;
+    /*
         //Draw puzzle based on game mode
         switch (this.gameMode){
             case "play":
@@ -127,7 +127,7 @@ class Puzzle {
 
                 break;
         }
-
+        */
     }
 
     /* ---- Utils  ---- */
