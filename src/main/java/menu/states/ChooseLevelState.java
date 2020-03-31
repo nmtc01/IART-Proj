@@ -33,7 +33,7 @@ public class ChooseLevelState implements MenuState {
 
         File folder = new File(path);
 
-        if (folder == null) {
+        if (!folder.exists()) {
             path = root + filepathUnix;
             folder = new File(path);
         }
