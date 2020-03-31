@@ -1,7 +1,6 @@
 package solver;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 public class DFS extends Solver {
 
