@@ -100,7 +100,6 @@ class Puzzle {
 
 
         }
-        System.out.println(this.solution);
 
         //Draw puzzle based on game mode
         switch (this.gameMode){
