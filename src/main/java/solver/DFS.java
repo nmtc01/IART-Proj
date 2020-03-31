@@ -26,10 +26,11 @@ public class DFS extends Solver {
             setCurrentState(v);
             this.expand_state();
             ExpansionTree.Node<ArrayList<ArrayList<Integer>>> w;
+            visitedNodes++;
             if (!(w = perform()).equals(getStates().getRoot())){
                 return w;
             }
-            visitedNodes++;
+
         }
         return getStates().getRoot();
     }
