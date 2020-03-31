@@ -6,7 +6,7 @@ import java.io.IOException;
 public class Application {
 
     public static void main(String[] args) {
-        Window window = new Window(15);
+        Window window = new Window(12);
         Menu menu = new Menu(window.getScreen());
         Mode mode = new Mode();
 

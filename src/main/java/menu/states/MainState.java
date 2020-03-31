@@ -74,10 +74,10 @@ public class MainState implements MenuState {
         }
         else textGraphics.setBackgroundColor(TextColor.Factory.fromString("#28334A"));
 
-        textGraphics.fillRectangle(new TerminalPosition(10, 16), new TerminalSize(32, 4), ' ');
+        textGraphics.fillRectangle(new TerminalPosition(15, 16), new TerminalSize(32, 4), ' ');
         textGraphics.setForegroundColor(TextColor.Factory.fromString("#FF6600"));
         textGraphics.enableModifiers(SGR.BOLD);
-        textGraphics.putString(new TerminalPosition(24, 18), "PLAY!");
+        textGraphics.putString(new TerminalPosition(29, 18), "PLAY!");
     }
 
     private void drawSolvePuzzleButton(TextGraphics textGraphics){
@@ -86,10 +86,10 @@ public class MainState implements MenuState {
         }
         else textGraphics.setBackgroundColor(TextColor.Factory.fromString("#28334A"));
 
-        textGraphics.fillRectangle(new TerminalPosition(10, 22), new TerminalSize(32, 4), ' ');
+        textGraphics.fillRectangle(new TerminalPosition(15, 22), new TerminalSize(32, 4), ' ');
         textGraphics.setForegroundColor(TextColor.Factory.fromString("#FF6600"));
         textGraphics.enableModifiers(SGR.BOLD);
-        textGraphics.putString(new TerminalPosition(20, 24), "SOLVE PUZZLE");
+        textGraphics.putString(new TerminalPosition(25, 24), "SOLVE PUZZLE");
     }
 
     private void drawQuitButton(TextGraphics textGraphics){
@@ -98,10 +98,10 @@ public class MainState implements MenuState {
         }
         else textGraphics.setBackgroundColor(TextColor.Factory.fromString("#28334A"));
 
-        textGraphics.fillRectangle(new TerminalPosition(10, 28), new TerminalSize(32, 4), ' ');
+        textGraphics.fillRectangle(new TerminalPosition(15, 28), new TerminalSize(32, 4), ' ');
         textGraphics.setForegroundColor(TextColor.Factory.fromString("#FF6600"));
         textGraphics.enableModifiers(SGR.BOLD);
-        textGraphics.putString(new TerminalPosition(24, 30), "QUIT");
+        textGraphics.putString(new TerminalPosition(29, 30), "QUIT");
     }
 
     private void moveUp() {
