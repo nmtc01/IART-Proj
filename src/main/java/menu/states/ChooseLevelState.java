@@ -12,6 +12,8 @@ import com.googlecode.lanterna.screen.Screen;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @SuppressWarnings("Duplicates")
 public class ChooseLevelState implements MenuState {
@@ -19,12 +21,12 @@ public class ChooseLevelState implements MenuState {
     private int overButton;
     public Mode mode;
     int numberOfLevels;
+    private List<String> filenames;
 
     public ChooseLevelState(Screen screen){
         this.screen = screen;
         this.overButton = 0;
         mode = new Mode();
-
 
         String root = System.getProperty("user.dir");
         String filepathWin = "\\src\\main\\resources\\puzzle"; // in case of Windows: "\\path \\to\\yourfile.txt
@@ -40,6 +42,16 @@ public class ChooseLevelState implements MenuState {
 
         File[] listOfFiles = folder.listFiles();
         numberOfLevels = listOfFiles.length;
+
+        filenames = new ArrayList<String>();
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            String filename = listOfFiles[i].getName().replaceAll(".csv", "");
+            filenames.add(filename);
+        }
+
+        Collections.sort(filenames, new LevelComparator());
+
     }
 
     public Mode getMode() {
@@ -48,8 +60,8 @@ public class ChooseLevelState implements MenuState {
 
     @Override
     public void draw(TextGraphics textGraphics) {
-        for (int i = 1; i <= numberOfLevels; i++) {
-            drawLevelButton(textGraphics, "lvl" + i, i - 1);
+        for (int i = 0; i < numberOfLevels; i++) {
+            drawLevelButton(textGraphics, filenames.get(i), i);
         }
     }
 
@@ -80,7 +92,7 @@ public class ChooseLevelState implements MenuState {
             moveRight();
 
         if (key.getKeyType() == KeyType.Enter){
-            mode.setLevel("lvl"+(overButton+1));
+            mode.setLevel(filenames.get(overButton));
         }
         return this;
     }
