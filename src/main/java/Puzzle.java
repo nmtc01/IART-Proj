@@ -21,14 +21,6 @@ class Puzzle {
         QUIT
     }
 
-    public enum algorith{
-        BFS,
-        DFS,
-        UNIFORM_COST,
-        GREEDY,
-        A_STAR
-    }
-
     private String filename;
     private String gameMode;
     private String algorithm;
@@ -71,31 +63,26 @@ class Puzzle {
         //Get algo type
         switch(this.algorithm){
             case "BFS":
-                System.out.println("bfs");
                 BFS bfs = new BFS(this.getBoard());
                 ExpansionTree.Node<ArrayList<ArrayList<Integer>>> bfs_root = bfs.perform();
                 this.solution = bfs.getSolution(bfs_root);
                 break;
             case "DFS":
-                System.out.println("dfs");
                 DFS dfs = new DFS(this.getBoard());
                 ExpansionTree.Node<ArrayList<ArrayList<Integer>>> dfs_root = dfs.perform();
                 this.solution = dfs.getSolution(dfs_root);
                 break;
             case "Uniform Cost":
-                System.out.println("uniform");
                 UniformCost uniformCost = new UniformCost(this.getBoard());
                 ExpansionTree.Node<ArrayList<ArrayList<Integer>>> uniformCost_root = uniformCost.perform();
                 this.solution = uniformCost.getSolution(uniformCost_root);
                 break;
             case "A*":
-                System.out.println("A");
                 AStar aStar = new AStar(this.getBoard());
                 ExpansionTree.Node<ArrayList<ArrayList<Integer>>> aStar_root = aStar.perform(); //TODO
                 this.solution = aStar.getSolution(aStar_root);
                 break;
             default:
-                System.out.println("greedy");
                 Greedy greedy = new Greedy(this.getBoard());
                 ExpansionTree.Node<ArrayList<ArrayList<Integer>>> greedy_root = greedy.perform();
                 this.solution = greedy.getSolution(greedy_root);
@@ -118,7 +105,6 @@ class Puzzle {
         switch (this.gameMode){
             case "play":
                 // If Human PLayer - draw with handler
-                System.out.println("human");
                 Solver solver = new Solver(this.board);
                 cursor.show();
 
