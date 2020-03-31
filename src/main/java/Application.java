@@ -2,7 +2,6 @@ import menu.Menu;
 import menu.states.Mode;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 public class Application {
 
