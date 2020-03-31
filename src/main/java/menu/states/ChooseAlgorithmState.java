@@ -75,7 +75,8 @@ public class ChooseAlgorithmState implements MenuState {
                     level.mode.setAlgorithm("A*");
                     break;
             }
-            return new ChooseLevelState(screen);
+            level.mode.setMode("solve");
+            return level;
         }
         return this;
     }
