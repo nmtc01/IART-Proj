@@ -85,11 +85,9 @@ class Puzzle {
                 break;
             case "A*":
                 System.out.println("A");
-                /*
                 AStar aStar = new AStar(this.getBoard());
-               ExpansionTree.Node<ArrayList<ArrayList<Integer>>> aStar_root = aStar.perform(); //TODO
+                ExpansionTree.Node<ArrayList<ArrayList<Integer>>> aStar_root = aStar.perform(); //TODO
                 this.solution = aStar.getSolution(aStar_root);
-                 */
                 break;
             default:
                 System.out.println("greedy");
