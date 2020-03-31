@@ -28,13 +28,13 @@ public class GameView {
 
     private void draw_board(TextGraphics textGraphics) {
         //Rectangle
-        textGraphics.setBackgroundColor(TextColor.Factory.fromString("#EEEEEE"));
+        textGraphics.setBackgroundColor(TextColor.Factory.fromString("#FBDE44"));
         textGraphics.fillRectangle(new TerminalPosition(5, 3), new TerminalSize(board.size()*4+1, board.size()*3+1), ' ');
 
         //Line of numbers
         textGraphics.enableModifiers(SGR.BOLD);
-        textGraphics.setBackgroundColor(TextColor.Factory.fromString("#0000FF"));
-        textGraphics.setForegroundColor(TextColor.Factory.fromString("#EEEEEE"));
+        textGraphics.setBackgroundColor(TextColor.Factory.fromString("#28334A"));
+        textGraphics.setForegroundColor(TextColor.Factory.fromString("#FBDE44"));
 
         textGraphics.putString(new TerminalPosition(5, 0), "╔");
         textGraphics.putString(new TerminalPosition(5, 1), "║");
@@ -143,7 +143,7 @@ public class GameView {
 
     private void draw_cursor(TextGraphics textGraphics) {
         textGraphics.enableModifiers(SGR.BOLD);
-        textGraphics.setBackgroundColor(TextColor.Factory.fromString("#FACA30"));
+        textGraphics.setBackgroundColor(TextColor.Factory.fromString("#FF6600"));
 
         textGraphics.putString(new TerminalPosition(cursor.getX()+1, cursor.getY()), " ");
         textGraphics.putString(new TerminalPosition(cursor.getX()-1, cursor.getY()), " ");
