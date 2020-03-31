@@ -63,6 +63,11 @@ class Puzzle {
         cursor.hide();
         this.gameView.run();
 
+        /**
+         * Time Start
+         * */
+        long start = System.currentTimeMillis();
+
         //Get algo type
         switch(this.algorithm){
             case "BFS":
@@ -98,6 +103,16 @@ class Puzzle {
 
 
         }
+
+        /**
+         * Time Finish
+         * */
+        long finish = System.currentTimeMillis();
+
+        long timeElapsed = finish - start;
+
+        System.out.println("Time Elapsed (ms): " + timeElapsed);
+
 
         //Draw puzzle based on game mode
         switch (this.gameMode){
