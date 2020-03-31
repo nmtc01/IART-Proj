@@ -230,8 +230,9 @@ public class GameView {
         textGraphics.setForegroundColor(TextColor.Factory.fromString("#000000"));
         textGraphics.putString(new TerminalPosition(0, board.get(0).size()*3+4), "How To play: ");
         textGraphics.putString(new TerminalPosition(0, board.get(0).size()*3+5), "Arrows - Move the cursor ");
-        textGraphics.putString(new TerminalPosition(0, board.get(0).size()*3+6), "Enter - Select/Unselect  elements ");
+        textGraphics.putString(new TerminalPosition(0, board.get(0).size()*3+6), "Enter - Select/Unselect elements to move ");
         textGraphics.putString(new TerminalPosition(0, board.get(0).size()*3+7), "Z - Undo move ");
+        textGraphics.putString(new TerminalPosition(0, board.get(0).size()*3+7), "H - Hint ");
         textGraphics.putString(new TerminalPosition(0, board.get(0).size()*3+8), "Escape - Exit the game");
     }
 
