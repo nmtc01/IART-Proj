@@ -49,8 +49,8 @@ class Puzzle {
        this.board = this.read_puzzle();
        this.window = window; //new Window(board.size());
        this.cursor = new Cursor(this);
-       this.gameView = new GameView(this.window.getScreen(), this.board, this.cursor);
-       this.event = new Event(window.getScreen(), this.keyEvent);
+        this.gameView = new GameView(this.window.getScreen(), this.board, this.cursor);
+        this.event = new Event(window.getScreen(), this.keyEvent);
        this.previousBoards = new ArrayList<ArrayList<ArrayList<Integer>>>();
     }
 

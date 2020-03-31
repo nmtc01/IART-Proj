@@ -17,6 +17,11 @@ public class Event {
     public Puzzle.keyEvent processKey() throws IOException {
         key = screen.readInput();
 
+        if (key.getKeyType() == KeyType.EOF) {
+            screen.close();
+            System.exit(0);
+        }
+        
         if (key.getKeyType() == KeyType.ArrowDown)
             this.event = Puzzle.keyEvent.MOVE_DOWN;
         else if (key.getKeyType() == KeyType.ArrowUp)

@@ -1,3 +1,5 @@
+import com.googlecode.lanterna.input.KeyType;
+
 import java.util.Arrays;
 
 public class Cursor {

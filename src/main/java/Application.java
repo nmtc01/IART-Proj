@@ -7,14 +7,8 @@ import java.util.Scanner;
 public class Application {
 
     public static void main(String[] args) {
-        //Get puzzle
-        System.out.print("Puzzle name: ");
-        Scanner input = new Scanner(System.in);
-        //String level = input.nextLine();
-
-        Window window = new Window(10);
+        Window window = new Window(15);
         Menu menu = new Menu(window.getScreen());
-
         Mode mode = new Mode();
 
         while (mode.getLevel() == "") {
@@ -28,8 +22,6 @@ public class Application {
         String gameMode = mode.getMode();
         String level = mode.getLevel();
         String algorithm = mode.getAlgorithm();
-
-        System.out.println("app: "+gameMode+" "+algorithm);
 
         Puzzle puzzle = new Puzzle(level,gameMode,algorithm,window);
 

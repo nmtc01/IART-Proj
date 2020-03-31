@@ -47,7 +47,8 @@ public class GameView {
             textGraphics.putString(new TerminalPosition(i*4 + 7, 1), Integer.toString(i));
             textGraphics.putString(new TerminalPosition(i*4 + 7, 2), " ");
             textGraphics.putString(new TerminalPosition(i*4 + 8, 0), "═");
-            textGraphics.putString(new TerminalPosition(i*4 + 8, 1), " ");
+            if (i < 10)
+                textGraphics.putString(new TerminalPosition(i*4 + 8, 1), " ");
             textGraphics.putString(new TerminalPosition(i*4 + 8, 2), " ");
             if (i == board.size()-1)
                 textGraphics.putString(new TerminalPosition(i*4 + 9, 0), "╗");
@@ -95,7 +96,8 @@ public class GameView {
         for (int j = 0; j < board.size(); j++) {
             textGraphics.putString(new TerminalPosition(1, j*3+4), " ");
             textGraphics.putString(new TerminalPosition(2, j*3+4), Integer.toString(j));
-            textGraphics.putString(new TerminalPosition(3, j*3+4), " ");
+            if (j < 10)
+                textGraphics.putString(new TerminalPosition(3, j*3+4), " ");
             textGraphics.putString(new TerminalPosition(4, j*3+4), " ");
             textGraphics.putString(new TerminalPosition(1, j*3+5), " ");
             textGraphics.putString(new TerminalPosition(2, j*3+5), " ");
