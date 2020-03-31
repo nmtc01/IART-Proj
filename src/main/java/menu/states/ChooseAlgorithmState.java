@@ -87,10 +87,10 @@ public class ChooseAlgorithmState implements MenuState {
         }
         else textGraphics.setBackgroundColor(TextColor.Factory.fromString("#28334A"));
 
-        textGraphics.fillRectangle(new TerminalPosition(14, 14 + order * 4), new TerminalSize(20, 4), ' ');
+        textGraphics.fillRectangle(new TerminalPosition(18, 14 + order * 4), new TerminalSize(20, 4), ' ');
         textGraphics.setForegroundColor(TextColor.Factory.fromString("#FF6600"));
         textGraphics.enableModifiers(SGR.BOLD);
-        textGraphics.putString(new TerminalPosition(16, 16 + order * 4), algorithm);
+        textGraphics.putString(new TerminalPosition(20, 16 + order * 4), algorithm);
     }
 
     private void moveUp() {
