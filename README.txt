@@ -1,6 +1,6 @@
 IART - TP1 - Jogo do tipo solitário (Zhed - tema 1E ) 
 
-Todo o projeto foi desenvolvido em Java 11 usando o ide de programação IntelliJ, com recurso a gradle.
+Todo o projeto foi desenvolvido em Java 11 usando o IDE de programação IntelliJ, com recurso a gradle.
 
 - Compilação: 
 	
@@ -8,7 +8,7 @@ Todo o projeto foi desenvolvido em Java 11 usando o ide de programação Intelli
 
 - Execução:
 	
-	Posteriormente à compilação na mesma janela de terminal executar o comando 'gradle run';
+	Posteriormente à compilação, na mesma janela de terminal executar o comando 'gradle run';
 
 - Utilização: 
 
@@ -26,5 +26,5 @@ Instruções de jogo:
 
 	- Quando se inicia o jogo, o tabuleiro apresenta um cursor laranja em destaque, que pode ser movido com as setas de seleção; 
 	- Para se escolher uma peça a jogar carrega-se no enter e em seguida escolhe-se o lado para onde a peça vai mover, com as setas de seleção. Caso não se queira mover a peça pode-se sempre voltar a carregar no enter, assim podendo-se mover novamente o cursor com liberdade; 
-	- As Teclas Z permitem retroceder movimentos e H pedir ajuda ao computador
+	- A tecla Z permite retroceder movimentos e a tecla H permite pedir ajuda ao computador;
 	- Escape, permite sair do jogo fechando a janela.
