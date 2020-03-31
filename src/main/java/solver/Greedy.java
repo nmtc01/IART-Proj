@@ -56,7 +56,7 @@ public class Greedy extends Solver {
                 }
             }
         }
-        System.out.println("Returning Root");
+
         return this.getStates().getRoot();
     }
 

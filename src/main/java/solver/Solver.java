@@ -35,10 +35,7 @@ public class Solver {
             }
             return ret;
         }
-        else {
-            System.out.println("Piece can't be moved (Up)");
-            return ret;
-        }
+        else return ret;
 
     }
     public ArrayList<ArrayList<Integer>> moveDown(int x, int y,ArrayList<ArrayList<Integer>> board){
@@ -61,10 +58,7 @@ public class Solver {
             }
             return ret;
         }
-        else {
-            System.out.println("Piece can't be moved (Down)");
-            return ret;
-        }
+        else return ret;
     }
     public ArrayList<ArrayList<Integer>> moveRight(int x, int y,ArrayList<ArrayList<Integer>> board){
 
@@ -86,10 +80,7 @@ public class Solver {
             }
             return ret;
         }
-        else {
-            System.out.println("Piece can't be moved (Right)");
-            return ret;
-        }
+        else return ret;
     }
     public ArrayList<ArrayList<Integer>> moveLeft(int x, int y,ArrayList<ArrayList<Integer>> board){
 
@@ -111,10 +102,7 @@ public class Solver {
             }
             return ret;
         }
-        else {
-            System.out.println("Piece can't be moved (Right)");
-            return ret;
-        }
+        else return ret;
     }
 
     //check if piece can be played -  playable when its not -2 -1 or 0
