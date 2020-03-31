@@ -1,4 +1,5 @@
 import com.googlecode.lanterna.screen.Screen;
+import menu.states.Mode;
 import solver.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,7 +21,17 @@ class Puzzle {
         QUIT
     }
 
+    public enum algorith{
+        BFS,
+        DFS,
+        UNIFORM_COST,
+        GREEDY,
+        A_STAR
+    }
+
     private String filename;
+    private String gameMode;
+    private String algorithm;
     private ArrayList<ArrayList<ArrayList<Integer>>> previousBoards;
     private ArrayList<ArrayList<Integer>> board;
     private ArrayList<ArrayList<ArrayList<Integer>>> solution;
@@ -31,10 +42,12 @@ class Puzzle {
     private Window window;
     private keyEvent keyEvent;
 
-    public Puzzle(String filename)  {
+    public Puzzle(String filename,String gameMode,String algorithm, Window window)  {
        this.filename = filename;
+       this.gameMode = gameMode;
+       this.algorithm = algorithm;
        this.board = this.read_puzzle();
-       this.window = new Window(board.size());
+       this.window = window; //new Window(board.size());
        this.cursor = new Cursor(this);
        this.gameView = new GameView(this.window.getScreen(), this.board, this.cursor);
        this.event = new Event(window.getScreen(), this.keyEvent);
@@ -42,53 +55,82 @@ class Puzzle {
     }
 
     public void run() throws IOException, InterruptedException {
-        /** Algorithm Testing*/
-        /*Greedy algorithm = new Greedy(this.getBoard());
-        draw(this.getBoard());
-        System.out.println("");
-        ExpansionTree.Node<ArrayList<ArrayList<Integer>>> s = algorithm.perform();
-        ArrayList<ArrayList<Integer>> finalBoard = s.getData();
-        draw(finalBoard);
 
-        DFS dfs = new DFS((this.getBoard()));
-        draw(this.getBoard());
-        System.out.println("");
-        ExpansionTree.Node<ArrayList<ArrayList<Integer>>> s = dfs.perform();
-        ArrayList<ArrayList<Integer>> finalBoard = s.getData();
-        draw(finalBoard);
-        */
+        System.out.println(this.algorithm);
+        System.out.println(this.gameMode);
 
         //Calculate Algo
         cursor.hide();
         this.gameView.run();
 
-        // 1 - Get algo type
-        Greedy algorithm = new Greedy(this.getBoard());
-        // 2 - Solve algo and return the root with the solution
-        ExpansionTree.Node<ArrayList<ArrayList<Integer>>> root = algorithm.perform();
-        // 3 - Get the list with the steps to perform
-        this.solution = algorithm.getSolution(root);
+        //Get algo type
+        switch(this.algorithm){
+            case "BFS":
+                System.out.println("bfs");
+                BFS bfs = new BFS(this.getBoard());
+                ExpansionTree.Node<ArrayList<ArrayList<Integer>>> bfs_root = bfs.perform();
+                this.solution = bfs.getSolution(bfs_root);
+                break;
+            case "DFS":
+                System.out.println("dfs");
+                DFS dfs = new DFS(this.getBoard());
+                ExpansionTree.Node<ArrayList<ArrayList<Integer>>> dfs_root = dfs.perform();
+                this.solution = dfs.getSolution(dfs_root);
+                break;
+            case "Uniform Cost":
+                System.out.println("uniform");
+                UniformCost uniformCost = new UniformCost(this.getBoard());
+                ExpansionTree.Node<ArrayList<ArrayList<Integer>>> uniformCost_root = uniformCost.perform();
+                this.solution = uniformCost.getSolution(uniformCost_root);
+                break;
+            case "A*":
+                System.out.println("A");
+                /*
+                AStar aStar = new AStar(this.getBoard());
+               ExpansionTree.Node<ArrayList<ArrayList<Integer>>> aStar_root = aStar.perform(); //TODO
+                this.solution = aStar.getSolution(aStar_root);
+                 */
+                break;
+            default:
+                System.out.println("greedy");
+                Greedy greedy = new Greedy(this.getBoard());
+                ExpansionTree.Node<ArrayList<ArrayList<Integer>>> greedy_root = greedy.perform();
+                this.solution = greedy.getSolution(greedy_root);
+                break;
 
-        // If Computer Playing - draw like this
-        /*
-        for(int i=0; i< solution.size(); i++){
-            TimeUnit.SECONDS.sleep(1); //todo remove maybe?? testing purposes
-            this.gameView.setBoard(solution.get(i));
-            this.gameView.run();
-        }
-    */
-        // If Human PLayer - draw with handler
-        Solver solver = new Solver(this.board);
-        cursor.show();
 
-        while (true) {
-            this.gameView.run();
-            this.keyEvent = event.processKey();
-            cursor.processKeyEvent(this.keyEvent);
-            if (solver.isEnd(this.board)) {
-                this.cursor.hide();
-            }
         }
+        System.out.println(this.solution);
+
+        //Draw puzzle based on game mode
+        switch (this.gameMode){
+            case "play":
+                // If Human PLayer - draw with handler
+                System.out.println("human");
+                Solver solver = new Solver(this.board);
+                cursor.show();
+
+                while (true) {
+                    this.gameView.run();
+                    this.keyEvent = event.processKey();
+                    cursor.processKeyEvent(this.keyEvent);
+                    if (solver.isEnd(this.board)) {
+                        this.cursor.hide();
+                    }
+                }
+                //break; //todo check for the winning condition end
+            case "solve":
+                // If Computer Playing - draw like this
+                System.out.println("ai");
+                for(int i=0; i< solution.size(); i++){
+                    TimeUnit.SECONDS.sleep(1); //todo remove maybe?? testing purposes
+                    this.gameView.setBoard(solution.get(i));
+                    this.gameView.run();
+                }
+
+                break;
+        }
+
     }
 
     /* ---- Utils  ---- */

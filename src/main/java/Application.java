@@ -29,7 +29,9 @@ public class Application {
         String level = mode.getLevel();
         String algorithm = mode.getAlgorithm();
 
-        Puzzle puzzle = new Puzzle(level);
+        System.out.println("app: "+gameMode+" "+algorithm);
+
+        Puzzle puzzle = new Puzzle(level,gameMode,algorithm,window);
 
         try {
             puzzle.run();
